@@ -19,6 +19,15 @@
                     </div>
                     <div class="signin-form">
                         <h2 class="form-title">Login Pelelang</h2>
+                          <?php
+                        	if(isset($_GET['pesan'])){
+                        		if($_GET['pesan'] == "logout"){
+                        			echo "Anda telah berhasil logout";
+                            } else {
+                              echo "Anda gagal logout";
+                            }
+                        	}
+                        	?>
                         <form class="register-form" id="login-form"action="prosesloginpl.php" method="post" name="formlogpl">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>

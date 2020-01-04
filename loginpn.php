@@ -18,7 +18,15 @@
                         <a href="regispn.php" class="signup-image-link">Buat akun</a>
                     </div>
                     <div class="signin-form">
-                        <h2 class="form-title">Login Penawar</h2>
+                        <h2 class="form-title">Login Penawar</h2><?php
+                        if(isset($_GET['pesan'])){
+                          if($_GET['pesan'] == "logout"){
+                            echo "Anda telah berhasil logout";
+                          } else {
+                            echo "Anda gagal logout";
+                          }
+                        }
+                        ?>
                         <form class="register-form" id="login-form"action="prosesloginpn.php" method="post" name="formlogpn">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
