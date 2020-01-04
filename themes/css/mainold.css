@@ -10,7 +10,6 @@ body{
 }
 label, input, button, select, textarea{
 	font-size: 12px;
-	
 }
 ul li a,a{
 	color:#333;
@@ -74,24 +73,6 @@ a:hover{
 .nav-tabs li.active, .accordion .accordion-heading {
 	font-weight: bold;
 	font-size: 12px;
-}
-
-.avatar{
-	position:absolute;
-	top:25%;
-	padding-left: 100px;
-	
-	
-}
-.avatar img{
-	width: 180px;
-	height: 180px;
-	border-radius: 100%;
-	border: 1px solid white;
-}
-.avatar buttonprof{
-	padding-left:100px;
-	margin-left: 40%;
 }
 #wrapper,#top-bar{
 	background: #fff;
@@ -158,8 +139,7 @@ section.homepage-slider span{
 }
 section.header_text.sub{
 	font-size:14px;
-	margin-bottom:120px;
-	
+	margin-bottom:40px;
 }
 section.header_text.sub h4{
 	text-transform:uppercase;
@@ -302,14 +282,13 @@ section.navbar{
 	padding-right:0;	
 	border-right: 0;
 	border-left: 0;
-	border-top:5px solid #3A3A84;
-	border-bottom:0;
+	border-top: 0;
+	border-bottom:5px solid #3A3A84;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;	
 	border-radius: 0;
 	filter: none;	
 }
-
 .navbar-inner.main-menu a.logo{
 	position:absolute;
 }
@@ -803,5 +782,4 @@ section.our_client .row{
 	.feature_box .service{	
 		border-bottom:1px solid #eee;
 	}
-}.deskripsi {
 }

@@ -12,13 +12,15 @@ if(isset($_POST['submitproduk'])) {
     $folder = "ikan/";
     $upload_image = $_FILES['gambar']['name'];
     $width_size = 480;
+    $height_size = 280;
     $filesave = $folder . $upload_image;
     move_uploaded_file($_FILES['gambar']['tmp_name'], $filesave);
     $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
     list( $width, $height ) = getimagesize($filesave);
-    $k = $width / $width_size;
-    $newwidth = $width / $k;
-    $newheight = $height / $k;
+    $w = $width / $width_size;
+    $h = $height / $height_size;
+    $newwidth = $width / $w;
+    $newheight = $height / $h;
     $thumb = imagecreatetruecolor($newwidth, $newheight);
     $source = imagecreatefromjpeg($filesave);
     imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
@@ -78,7 +80,7 @@ if(isset($_POST['submitproduk'])) {
 				</div>
 			</div>
 		</div>
-		<div id="wrapper" class="container">>
+		<div id="wrapper" class="container">
 			<section class="header_text sub">
 			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<h4><span>Upload Produk</span></h4>

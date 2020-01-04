@@ -6,7 +6,7 @@ include "config.php";
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Bootstrap E-commerce Templates</title>
+		<title>Home Penawar</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
@@ -59,27 +59,67 @@ include "config.php";
 					<div class="span9">
 						<ul class="thumbnails listing-products">
 							<?php
-						  $halaman = 6;
+							function rupiah($angka){
+								$hasil_rupiah = number_format($angka,0,',','.');
+								return $hasil_rupiah;
+							}
+						  $halaman = 9;
 						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
 						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
 						  $result = mysqli_query($mysqli,"SELECT * FROM ikan");
 						  $total = mysqli_num_rows($result);
 						  $pages = ceil($total/$halaman);
-							include "config.php";
-						  $query = mysqli_query($mysqli,"SELECT * FROM ikan LIMIT $mulai, $halaman")or die(mysql_error);
+						  $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
 						  $no =$mulai+1;
-						  while ($data = mysqli_fetch_assoc($query)) {
+							if (isset($_GET['jenis'])) {
+								$getjenis = $_GET['jenis'];
+                $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE jenis_ikan = '$getjenis', status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
+  						  $no =$mulai+1;
+  						  while ($data = mysqli_fetch_assoc($query)) {
+  						    ?>
+  								<li class="span3">
+  									<div class="product-box">
+  										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>">
+  										<span class="sale_tag"></span>
+  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" src="<?php echo $data['gambar_ikan']; ?>"></a><br/>
+  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="title"><?php echo $data['jenis_ikan']; ?>
+  										</a><br/>
+  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
+  										<br/>
+  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
+  										<p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p>
+  										</a>
+  									</div>
+  								</li>
+  						    <?php
+  						  }
+  						  ?>
+  						</table>
+  						</ul>
+  						<hr>
+  						<div class="pagination pagination-medium pagination-centered">
+  							<ul>
+  								<li>
+  								  <?php for ($i=1; $i<=$pages ; $i++){ ?>
+  								  <a href="?halaman=<?php echo $i;?>"><?php echo $i; ?></a>
+  								  <?php } ?>
+  								</li>
+  							</ul>
+  						</div>
+              <?php
+						} else {
+							while ($data = mysqli_fetch_assoc($query)) {
 						    ?>
 								<li class="span3">
 									<div class="product-box">
-										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>">
+										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>">
 										<span class="sale_tag"></span>
-										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" src="<?php echo $data['gambar_ikan']; ?>"></a><br/>
-										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>" class="title"><?php echo $data['jenis_ikan']; ?>
+										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" src="<?php echo $data['gambar_ikan']; ?>"></a><br/>
+										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="title"><?php echo $data['jenis_ikan']; ?>
 										</a><br/>
-										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
+										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
 										<br/>
-										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
+										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
 										<p class="price">Rp. <?php echo $data['harga_ikan']; ?></p>
 										</a>
 									</div>
@@ -92,9 +132,35 @@ include "config.php";
 						<hr>
 						<div class="pagination pagination-medium pagination-centered">
 							<ul>
+								<li>
 								  <?php for ($i=1; $i<=$pages ; $i++){ ?>
 								  <a href="?halaman=<?php echo $i;?>"><?php echo $i; ?></a>
 								  <?php } ?>
+								</li>
+							</ul>
+						</div>
+					<?php  } ?>
+					</div>
+					<div class="span3 col">
+						<div class="block">
+							<ul class="nav nav-list">
+								<a><img width="115px" height="115px" src="Elang.png" class="site_logo" alt=""></a>
+								<li class="nav-header">JENIS IKAN</li>
+                <li><a href="homepn.php">Semua Jenis</a></li>
+                <?php
+                $queryjenis = mysqli_query($mysqli,"SELECT * FROM ikan group by jenis_ikan");
+  						  while ($jenis = mysqli_fetch_assoc($queryjenis)) {
+                  echo '<li><a href="homepn.php?jenis='.$jenis['jenis_ikan'].'">'.$jenis['jenis_ikan'].'</a></li>';
+                }
+  						    ?>
+							</ul>
+							<br/>
+							<ul class="nav nav-list below">
+								<li class="nav-header">WAKTU HABIS</li>
+								<li><a href="products.html">16.00 20/12/2019</a></li>
+								<li><a href="products.html">05.00 21/12/2019</a></li>
+								<li><a href="products.html">10.00 21/12/2019</a></li>
+								<li><a href="products.html">14.00 21/12/2019</a></li>
 							</ul>
 						</div>
 					</div>
