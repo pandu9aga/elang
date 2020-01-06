@@ -52,7 +52,7 @@ $id_pelelang = $_SESSION['id_pelelang'];
 		<div id="wrapper" class="container">
 			<section class="header_text sub">
 				<div class="navbar-inner main-menu">
-				<h4><span>Produk Yang Sedang Anda Lelang</span></h4>
+				<h4><span>Produk Yang Anda Lelang</span></h4>
 				</div>
 		    </section>
 			<section class="main-content">
@@ -132,7 +132,7 @@ $id_pelelang = $_SESSION['id_pelelang'];
 										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
 										<br/>
 										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
-										<p class="price">Rp. <?php echo $data['harga_ikan']; ?></p>
+										<p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p>
 										</a>
 									</div>
 								</li>
