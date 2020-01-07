@@ -13,6 +13,11 @@ while($datapn = mysqli_fetch_array($result))
     $emailpn = $datapn['email_penawar'];
     $passpn = $datapn['password_penawar'];
     $pppn = $datapn['pp_penawar'];
+    $saldopn = $datapn['saldo'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
 }
 ?>
 <html lang="en">
@@ -53,7 +58,7 @@ while($datapn = mysqli_fetch_array($result))
 						<ul class="user-menu">
 							<li><a href="profilpn.php">Profil</a></li>
 							<li><a href="cart.php">Your Cart</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="topup.php">Topup</a></li>
 							<li><a href="logoutpn.php">Logout</a></li>
 						</ul>
 					</div>
@@ -61,10 +66,19 @@ while($datapn = mysqli_fetch_array($result))
 			</div>
 		</div>
 		<div id="wrapper" class="container">
-				<div class="navbar-inner main-menu center">
-				<h4>Profil</h4>
+      <section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+					<nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
+						</ul>
+					</nav>
 				</div>
-			<section class="navbar main-menu">
+			</section>
+      <section class="header_text sub">
+        <h4>Profil</h4>
+      </section>
+			<section class="navbar main-content">
 				<div class="row">
 					<div class="span9">
 						<div class="row">

@@ -3,6 +3,17 @@ session_start();
 include "config.php";
 $id_penawar = $_SESSION['id_penawar'];
 $id_ikan = $_GET['id_ikan'];
+$sqlpn = "SELECT * FROM penawar WHERE id_penawar = '$id_penawar'";
+$resultpn = mysqli_query($mysqli, $sqlpn);
+while($datapn = mysqli_fetch_array($resultpn))
+{
+    $namapn = $datapn['nama_penawar'];
+    $saldopn = $datapn['saldo'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
+}
 $sql = "SELECT * FROM ikan WHERE id_ikan = '$id_ikan'";
 $result = mysqli_query($mysqli, $sql);
 while($dataikan = mysqli_fetch_array($result))
@@ -56,7 +67,7 @@ while($dataikan = mysqli_fetch_array($result))
 						<ul class="user-menu">
 							<li><a href="profilpn.php">Profil</a></li>
 							<li><a href="cart.php">Your Cart</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="topup.php">Topup</a></li>
 							<li><a href="logoutpn.php">Logout</a></li>
 						</ul>
 					</div>
@@ -64,6 +75,15 @@ while($dataikan = mysqli_fetch_array($result))
 			</div>
 		</div>
 		<div id="wrapper" class="container">
+      <section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+					<nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
 			<section class="header_text sub">
 			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<h4><span>Product Detail</span></h4>
@@ -82,10 +102,6 @@ while($dataikan = mysqli_fetch_array($result))
                   <strong>Harga Awal:</strong> <span>Rp. <?php echo rupiah($harga); ?></span><br>
 								</address>
                 <?php
-                function rupiah($angka){
-  								$hasil_rupiah = number_format($angka,0,',','.');
-  								return $hasil_rupiah;
-  							}
                 $sqltw = "SELECT MAX(jumlah_tawaran) AS max FROM tawaran WHERE id_ikan = '$id_ikan'";
                 $resulttw = mysqli_query($mysqli,$sqltw);
                 $datatw = mysqli_fetch_array($resulttw);

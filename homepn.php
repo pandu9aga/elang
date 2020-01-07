@@ -1,6 +1,18 @@
 <?php
 session_start();
 include "config.php";
+$id_penawar = $_SESSION['id_penawar'];
+$sqlpn = "SELECT * FROM penawar WHERE id_penawar = '$id_penawar'";
+$resultpn = mysqli_query($mysqli, $sqlpn);
+while($datapn = mysqli_fetch_array($resultpn))
+{
+    $namapn = $datapn['nama_penawar'];
+    $saldopn = $datapn['saldo'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +53,7 @@ include "config.php";
 						<ul class="user-menu">
 							<li><a href="profilpn.php">Profil</a></li>
 							<li><a href="cart.php">Your Cart</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="topup.php">Topup</a></li>
 							<li><a href="logoutpn.php">Logout</a></li>
 						</ul>
 					</div>
@@ -49,20 +61,24 @@ include "config.php";
 			</div>
 		</div>
 		<div id="wrapper" class="container">
+			<section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+					<nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
 			<section class="header_text sub">
 			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<h4><span>Ikan Segar Untuk Anda</span></h4>
 			</section>
 			<section class="main-content">
-
 				<div class="row">
 					<div class="span9">
 						<ul class="thumbnails listing-products">
 							<?php
-							function rupiah($angka){
-								$hasil_rupiah = number_format($angka,0,',','.');
-								return $hasil_rupiah;
-							}
 						  $halaman = 9;
 						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
 						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
@@ -73,7 +89,7 @@ include "config.php";
 						  $no =$mulai+1;
 							if (isset($_GET['jenis'])) {
 								$getjenis = $_GET['jenis'];
-                $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE jenis_ikan = '$getjenis', status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
+                $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE jenis_ikan = '$getjenis' and status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
   						  $no =$mulai+1;
   						  while ($data = mysqli_fetch_assoc($query)) {
   						    ?>
@@ -120,7 +136,7 @@ include "config.php";
 										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
 										<br/>
 										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
-										<p class="price">Rp. <?php echo $data['harga_ikan']; ?></p>
+										<p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p>
 										</a>
 									</div>
 								</li>

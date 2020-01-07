@@ -2,6 +2,17 @@
 session_start();
 include "config.php";
 $id_penawar = $_SESSION['id_penawar'];
+$sqlpn = "SELECT * FROM penawar WHERE id_penawar = '$id_penawar'";
+$resultpn = mysqli_query($mysqli, $sqlpn);
+while($datapn = mysqli_fetch_array($resultpn))
+{
+    $namapn = $datapn['nama_penawar'];
+    $saldopn = $datapn['saldo'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
+}
 $id_pelelang = $_GET['id_pelelang'];
 $sql = "SELECT * FROM pelelang WHERE id_pelelang = '$id_pelelang'";
 $result = mysqli_query($mysqli, $sql);
@@ -55,7 +66,7 @@ while($datapl = mysqli_fetch_array($result))
 						<ul class="user-menu">
 							<li><a href="profilpn.php">Profil</a></li>
 							<li><a href="cart.php">Cart</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="topup.php">Topup</a></li>
 							<li><a href="logoutpn.php">Logout</a></li>
 						</ul>
 					</div>
@@ -63,6 +74,15 @@ while($datapl = mysqli_fetch_array($result))
 			</div>
 		</div>
 		<div id="wrapper" class="container">
+      <section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+					<nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
 				<div class="navbar-inner main-menu center">
 				<h4>Profil Pelelang</h4>
 				</div>

@@ -1,6 +1,18 @@
 <?php
 session_start();
 include "config.php";
+$id_penawar = $_SESSION['id_penawar'];
+$sql = "SELECT * FROM penawar WHERE id_penawar = '$id_penawar'";
+$result = mysqli_query($mysqli, $sql);
+while($datapn = mysqli_fetch_array($result))
+{
+    $namapn = $datapn['nama_penawar'];
+    $saldopn = $datapn['saldo'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +52,7 @@ include "config.php";
 						<ul class="user-menu">
 							<li><a href="profilpn.php">Profil</a></li>
 							<li><a href="cart.php">Your Cart</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="topup.php">Topup</a></li>
 							<li><a href="logoutpn.php">Logout</a></li>
 						</ul>
 					</div>
@@ -48,6 +60,15 @@ include "config.php";
 			</div>
 		</div>
 		<div id="wrapper" class="container">
+      <section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+					<nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
 			<section class="header_text sub">
 			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<h4><span>Bid Cart</span></h4>
@@ -59,11 +80,6 @@ include "config.php";
 						<table class="table table-striped">
 							<tbody>
                 <?php
-                $id_penawar = $_SESSION['id_penawar'];
-                function rupiah($angka){
-                	$hasil_rupiah = number_format($angka,0,',','.');
-                	return $hasil_rupiah;
-                }
   						  $halaman = 5;
   						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
   						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;

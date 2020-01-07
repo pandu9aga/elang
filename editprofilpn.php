@@ -50,6 +50,11 @@ while($datapn = mysqli_fetch_array($result))
     $emailpn = $datapn['email_penawar'];
     $passpn = $datapn['password_penawar'];
     $pppn = $datapn['pp_penawar'];
+    $saldopn = $datapn['saldo'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
 }
 ?>
 <!DOCTYPE html>
@@ -91,7 +96,7 @@ while($datapn = mysqli_fetch_array($result))
 						<ul class="user-menu">
 							<li><a href="profilpn.php">Profil</a></li>
 							<li><a href="cart.php">Your Cart</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="topup.php">Topup</a></li>
 							<li><a href="logoutpn.php">Logout</a></li>
 						</ul>
 					</div>
@@ -99,6 +104,18 @@ while($datapn = mysqli_fetch_array($result))
 			</div>
 		</div>
 		<div id="wrapper" class="container">
+      <section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+					<nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+      <section class="header_text sub">
+        <h4>  Edit Profil</h4>
+      </section>
 			<section class="navbar main-menu">
 				<div class="row">
 					<div class="span9">
@@ -116,7 +133,7 @@ while($datapn = mysqli_fetch_array($result))
 								</div>
 							</div>
 							<div class="span5">
-                <form name="update_pl" method="post" action="editprofilpn.php">
+                <form name="update_pn" method="post" action="editprofilpn.php">
 								<address>
 									<h4><strong>Nama Penawar:</strong></h4>
 									<input type="text" class="span5" name="namapn" value="<?php echo $namapn; ?>">

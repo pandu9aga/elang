@@ -71,7 +71,7 @@ if(isset($_POST['submitproduk'])) {
 				<div class="span8">
 					<div class="account pull-right">
 						<ul class="user-menu">
-							<li><a href="profilpl.php">My Account</a></li>
+							<li><a href="profilpl.php">Profil</a></li>
 							<li><a href="cart.html">Your Cart</a></li>
 							<li><a href="checkout.html">Checkout</a></li>
 							<li><a href="logoutpl.php">Logout</a></li>
@@ -130,6 +130,7 @@ if(isset($_POST['submitproduk'])) {
                     });
                   </script>
   								<label>Masukan Harga Awal</label>
+                  Rp.
   								<input type="number" class="span4" name="harga_awal" placeholder="Masukan Harga awal">
   								<label>Masukan Deskripsi Ikan</label>
   								<input type="text" class="span9" name="deskripsi" placeholder="Masukan Deskripsi">
