@@ -60,7 +60,7 @@ while($dataikan = mysqli_fetch_array($result))
 		<div id="top-bar" class="container">
 			<div class="row">
 				<div class="span4">
-          <a href="homepn.php" class="logo pull-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
+          <img href="homepn.php" width="115px" height="115px" src="elanghome.png" class="site_logo" alt="">
 				</div>
 				<div class="span8">
 					<div class="account pull-right">
@@ -85,10 +85,15 @@ while($dataikan = mysqli_fetch_array($result))
 				</div>
 			</section>
 			<section class="header_text sub">
-			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
+			<a href="homepn.php"><img class="pageBanner" src="themes/images/promo.png" alt="New products" ></a>
 				<h4><span>Product Detail</span></h4>
 			</section>
 			<section class="main-content">
+      <?php
+      if (isset($_GET['saldo'])) {
+        echo "Maaf saldo anda tidak cukup, lakukan topup untuk menambah saldo....!!";
+      }
+       ?>
 				<div class="row">
 					<div class="span9">
 						<div class="row">
@@ -112,7 +117,7 @@ while($dataikan = mysqli_fetch_array($result))
                 $tawaran_tertinggipn = $datatwpn['maxpn'];
                 ?>
 								<h4><strong>Tawaran Tertinggi :</strong> Rp. <?php echo rupiah($tawaran_tertinggi); ?></h4>
-                <h4><strong>Tawaran Tertinggi Anda :</strong> Rp. <?php echo rupiah($tawaran_tertinggipn);?></h5>
+                <h4><strong>Tawaran Anda :</strong> Rp. <?php echo rupiah($tawaran_tertinggipn);?></h5>
                 <?php
                 if ($tawaran_tertinggipn > 0) {
                   if ($tawaran_tertinggi == $tawaran_tertinggipn) {
@@ -185,12 +190,9 @@ while($dataikan = mysqli_fetch_array($result))
 							<div class="span9">
 								<br>
 								<h4 class="title">
-									<span class="pull-left"><span class="text"><strong>Produk</strong> Lainnya</span></span>
-									<span class="pull-right">
-										<a class="left button" href="#myCarousel-1" data-slide="prev"></a><a class="right button" href="#myCarousel-1" data-slide="next"></a>
-									</span>
+									<span class="pull-left"><span class="text"><strong>Info</strong> Produk</span></span>
+									<span class="pull-right"></span>
 								</h4>
-
 						</div>
 					</div>
 				</div>
@@ -259,7 +261,7 @@ while($dataikan = mysqli_fetch_array($result))
 					closeEffect : 'none'
 				});
 
-				$('#myCarousel-2').carousel({
+				$('#myCarousel-1').carousel({
                     interval: 2500
                 });
 			});
