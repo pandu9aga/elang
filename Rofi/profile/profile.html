@@ -1,0 +1,102 @@
+<html>
+<head>
+	<style>
+		
+		.avatar {
+			margin-top: 20px;
+			margin-bottom: 30px;
+			border-radius:50%;
+			max-width:150px;
+			transform: scale(0.95);
+			transition:all .5s;
+			cursor:pointer;
+		}
+		.button {
+			  background-color: #f7f7f7;
+			  border: none;
+			  color: #043353;
+			  padding: 10px 32px;
+			  text-align: center;
+			  text-decoration: none;
+			  display: inline-block;
+			  font-size: 16px;
+			  margin: 4px 2px;
+			  cursor: pointer;
+			  margin-bottom: 10px;
+		}
+
+		.avatar:hover {
+		  transform: scale(1);
+		  box-shadow: 0 37.125px 70px -12.125px rgba(0,0,0,0.2);
+		}
+		.profileInfo {
+		  margin-top:1em;
+		  font-weight:200;
+		  font-size:18px;
+		  color:#fff;
+		  text-align:center;
+		}
+
+		.td{
+			text-align: left;
+			padding-left: 10px;
+			padding-right: 20px;
+		}
+		table{
+			
+			border-radius: 25px;
+  			background: #043353;
+  			opacity: 0.9;
+		}
+		body{
+			background-image: url(back.jpg);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	</style>
+
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body align="center">
+	<br /><br />
+	<h2>USER PROFILE</h2>
+
+
+	<table border="0" class="profileInfo" align="center">
+ 				<tr>
+    				<td colspan="3" align="center">
+    					<img class='avatar' src='image/Yoona.jpg' style='width:170px; height:150px;'>
+    				</td>
+    			</tr>
+                <tr>
+                	<td class="td">Nama</td>
+                	<td>:</td>
+                    <td class="td"></td>
+                </tr>
+                <tr>
+                	<td class="td">Alamat</td>
+                	<td>:</td>
+                    <td class="td"></td>
+                </tr>
+                <tr>
+                	<td class="td">Jenis Kelamin</td>
+                	<td>:</td>
+                    <td class="td"></td>
+                </tr>
+                <tr>
+                	<td class="td">No Telpon</td>
+                	<td>:</td>
+                    <td class="td"></td>
+                </tr>
+                
+                <tr>
+                    <td colspan="3" align="center">
+                    	<input type="submit" value="Edit" class="button"/>
+                    </td>
+                </tr>
+
+	</table>
+</body>
+</html>
