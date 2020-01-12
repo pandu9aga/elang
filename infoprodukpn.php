@@ -25,6 +25,8 @@ while($dataikan = mysqli_fetch_array($result))
     $gambar = $dataikan['gambar_ikan'];
     $jenis = $dataikan['jenis_ikan'];
     $idpl = $dataikan['id_pelelang'];
+    $status = $dataikan['status_lelang'];
+    $sttkirim = $dataikan['status_kirim'];
 }
 ?>
 <!DOCTYPE html>
@@ -94,11 +96,16 @@ while($dataikan = mysqli_fetch_array($result))
         echo "Maaf saldo anda tidak cukup, lakukan topup untuk menambah saldo....!!";
       }
        ?>
+       <?php
+       if (isset($_GET['hapus'])) {
+         echo "Hapus tawaran berhasil....!!";
+       }
+        ?>
 				<div class="row">
 					<div class="span9">
 						<div class="row">
 							<div class="span4">
-								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="<?php echo $gambar; ?>"></a>
+								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Info Produk"><img alt="" src="<?php echo $gambar; ?>"></a>
 							</div>
 							<div class="span5">
 								<address>
@@ -126,20 +133,50 @@ while($dataikan = mysqli_fetch_array($result))
                     echo "Tawaran anda bukan yang tertinggi...!!<br>";
                   }
                 }
-                $mintawaran = $tawaran_tertinggi + 1;
+                if ($status == 'berlangsung') { ?>
+                  <br><a href="hapustawaran.php?id_penawar=<?php echo $id_penawar;?>&id_ikan=<?php echo $id_ikan;?>"><button class="btn btn-inverse"name="delete">Hapus Tawaran</button></a>
+                <?php
+                  $mintawaran = $tawaran_tertinggi + 1;
+                  ?>
+                  <div class="span5">
+    								<form class="form-inline" method="post" action="tawaran.php">
+    									<p>&nbsp;</p>
+    									<label>Masukkan Tawaran : Rp.</label>
+    									<input type="number" min="<?php echo $mintawaran; ?>"class="span2" name="tawaran" placeholder="masukan harga">
+                      <input type="hidden" name="penawar" value="<?php echo $id_penawar; ?>">
+                      <input type="hidden" name="ikan" value="<?php echo $id_ikan; ?>">
+    									<button class="btn btn-inverse" type="submit" name="submittawaran">+</button>
+    								</form>
+    							</div>
+                <?php
+                }
                 ?>
-                <br><a href="hapustawaran.php?id_penawar=<?php echo $id_penawar;?>&id_ikan=<?php echo $id_ikan;?>"><button class="btn btn-inverse"name="delete">Hapus Tawaran</button></a>
 							</div>
-							<div class="span5">
-								<form class="form-inline" method="post" action="tawaran.php">
-									<p>&nbsp;</p>
-									<label>Masukkan Tawaran : Rp.</label>
-									<input type="number" min="<?php echo $mintawaran; ?>"class="span2" name="tawaran" placeholder="masukan harga">
-                  <input type="hidden" name="penawar" value="<?php echo $id_penawar; ?>">
-                  <input type="hidden" name="ikan" value="<?php echo $id_ikan; ?>">
-									<button class="btn btn-inverse" type="submit" name="submittawaran">+</button>
-								</form>
-							</div>
+              <?php
+              if ($status == 'selesai') { ?>
+                <div class="span5">
+                  <h3>Pelelangan Selesai</h3>
+                  <?php
+                  if ($tawaran_tertinggipn==$tawaran_tertinggi) {
+                    if ($sttkirim=='kirim') { ?>
+                      <p>Produk sedang dikirim ke alamat anda</p>
+                      <p>Konfirmasi produk telah diterima : <a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Konfirmasi</button></a></p>
+                    <?php
+                    } elseif ($sttkirim=='terima') { ?>
+                      <p>Produk telah diterima oleh anda...transaksi pelelang sukses</p>
+                    <?php
+                    } else {
+                      echo "Anda memenangkan pelelangan ini...!! ";
+                      echo "Menunggu pelelang mengirim produk ini";
+                    }
+                  } else {
+                    echo "Anda tidak memenangkan pelelangan ini";
+                  }
+                   ?>
+  							</div>
+              <?php
+              }
+               ?>
 						</div>
 						<div class="row">
 							<div class="span9">

@@ -17,8 +17,22 @@ while($data = mysqli_fetch_array($result))
 {
     $id_ikan = $data['id_ikan'];
     $waktulelang = $data['waktu_lelang'];
+    $status = $data['status_lelang'];
     if ($now > $waktulelang) {
-      $change = mysqli_query($mysqli, "UPDATE ikan SET status_lelang='selesai' WHERE id_ikan='$id_ikan'");
+      if ($status=='berlangsung') {
+        $change = mysqli_query($mysqli, "UPDATE ikan SET status_lelang='selesai' WHERE id_ikan='$id_ikan'");
+        $cekquery = mysqli_query($mysqli, "SELECT MAX(jumlah_tawaran) AS max FROM tawaran WHERE id_ikan = '$id_ikan'");
+        $sqlcek = mysqli_fetch_array($cekquery);
+        $twmax = $sqlcek['max'];
+        $cekwin = mysqli_query($mysqli,"SELECT * FROM tawaran WHERE id_ikan='$id_ikan' and jumlah_tawaran='$twmax'");
+        $sqlcekwin = mysqli_fetch_array($cekwin);
+        $id_wintw = $sqlcekwin['id_tawaran'];
+        $setwin = mysqli_query($mysqli, "INSERT INTO pemenang (id_tawaran) VALUES ('$id_wintw')");
+        $querywin = mysqli_query($mysqli,"SELECT * FROM pemenang WHERE id_tawaran='$id_wintw'");
+        $datawin = mysqli_fetch_array($querywin);
+        $id_winner = $datawin['id_pemenang'];
+        $translelang = mysqli_query($mysqli, "INSERT INTO transfer_pelelang (id_pemenang,status_transpelelang) VALUES ('$id_winner','')");
+      }
     }
 }
 ?>

@@ -1,3 +1,18 @@
+<?php
+session_start();
+include "config.php";
+$id_admin = $_SESSION['id_admin'];
+$sqladm = "SELECT * FROM admin WHERE id_admin = '$id_admin'";
+$resultadm = mysqli_query($mysqli, $sqladm);
+while($dataadm = mysqli_fetch_array($resultadm))
+{
+    $namaadm = $dataadm['nama_admin'];
+}
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,11 +44,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="topupadmin.php">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+          <img width="45px" height="45px" src="elang.png" alt="">
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Elang <sup>Admin</sup></div>
       </a>
 
       <!-- Divider -->
@@ -41,16 +56,15 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="topupadmin.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Top-up Penawar</span></a>
       </li>
-
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="transferadmin.php">
           <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
+          <span>Transfer Pelelang</span></a>
       </li>
 
       <!-- Divider -->
@@ -223,7 +237,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $namaadm; ?></span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -257,99 +271,116 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          <h1 class="h3 mb-4 text-gray-800">Admin Transfer Pelelang</h1>
 
           <!-- kotak -->
           <div class="row border-top border-left border-right border-bottom pt-2">
             <div class="col-md-3">
               <!-- Button trigger modal -->
-              <a  data-toggle="modal" data-target="#buktitransfer">
-                <img src="img/index.jpeg" alt="bukti transfer" width="250" height="110">
-              </a>
 
               <!-- Modal -->
               <div class="modal fade" id="buktitransfer" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="buktiTransferLabel">Bukti Transfer</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                    </div>
-                    <div class="modal-body">
-                      <img src="img/index.jpeg" alt="bukti transfer" width="465" height="300">
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-7">
-              <p>Tgl 05 Jan 2020</p>
-              <p>Wahyueeeeeeeeeeee</p>
-              <p>Nominal Rp. 150.000,00</p>
+            <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-12">
+          <b class="home" style="margin-left: 470px">Upload Bukti Transfer</b>
+        </div>
+      </div>
+      <?php
+      if (isset($_GET['idtranspl'])) {
+        $idtranspl = $_GET['idtranspl'];
+        $query = mysqli_query($mysqli,"SELECT * FROM transfer_pelelang t inner join pemenang p on t.id_pemenang=p.id_pemenang WHERE id_transfer_pelelang='$idtranspl'");
+        while ($data = mysqli_fetch_assoc($query)) {
+          $idtw = $data['id_tawaran'];
+          $buktitranspl = $data['bukti_transpelelang'];
+          $statbukti = $data['status_transpelelang'];
+          $cektawaran = mysqli_query($mysqli,"SELECT * FROM tawaran WHERE id_tawaran='$idtw'");
+          while ($datatw=mysqli_fetch_array($cektawaran)) {
+            $nomtw = $datatw['jumlah_tawaran'];
+            $idikan = $datatw['id_ikan'];
+          }
+          $cekikan = mysqli_query($mysqli,"SELECT * FROM ikan i inner join pelelang p on i.id_pelelang=p.id_pelelang WHERE id_ikan='$idikan'");
+          while ($dataikan=mysqli_fetch_array($cekikan)) {
+            $namapl = $dataikan['nama_pelelang'];
+            $rekpl = $dataikan['rek_pelelang'];
+          }
+        }
+      }
+      ?>
+      <div class="row">
+        <div class="col-12">
+          <p>Pelelang : <?php echo $namapl; ?></p>
+          <p>Rekening : <?php echo $rekpl; ?></p>
+          <p>Nominal : <?php echo rupiah($nomtw); ?></p>
+        </div>
+      </div>
+      <?php
+      if ($statbukti=='kirim') { ?>
+        <div class="input-group mb-3 mt-4">
+          <div class="costum-file">
+            <div class="row">
+              <img src="<?php echo $buktitranspl; ?>" style="margin-left: 340px" height="250" weight="250">
             </div>
-            <div class="col-md-2 pl-5">
-              <br> <br> <br>
-              <button type="button" class="btn btn-primary" name="button">Konfirmasi</button>
-            </div>
-          </div> <br>
-          <!-- akhir kotak -->
-          <!-- kotak -->
-          <div class="row border-top border-left border-right border-bottom pt-2">
-            <div class="col-md-3">
-              <!-- Button trigger modal -->
-              <a  data-toggle="modal" data-target="#buktitransfer">
-                <img src="img/index.jpeg" alt="bukti transfer" width="250" height="110">
-              </a>
-
-              <!-- Modal -->
-              <div class="modal fade" id="buktitransfer" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="buktiTransferLabel">Bukti Transfer</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <img src="img/index.jpeg" alt="bukti transfer" width="465" height="300">
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                    </div>
-                  </div>
-                </div>
+            <div class="row mb-3 mt-4">
+              <div class="col-md-12" style="margin-left: 150px">
+                <p>Bukti Transfer Sudah di Upload</p>
+                <p>Menunggu Konfirmasi diterima oleh Pelelang....</p>
               </div>
-            </div>
-            <div class="col-md-7">
-              <p>Tgl 05 Jan 2020</p>
-              <p>Wahyueeeeeeeeeeee</p>
-              <p>Nominal Rp. 150.000,00</p>
-            </div>
-            <div class="col-md-2 pl-5">
-              <br> <br> <br>
-              <button type="button" class="btn btn-primary" name="button">Konfirmasi</button>
             </div>
           </div>
-          <!-- akhir kotak -->
         </div>
-        <!-- /.container-fluid -->
-
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
+      <?php
+      } elseif ($statbukti=='konfirm') { ?>
+        <div class="input-group mb-3 mt-4">
+          <div class="costum-file">
+            <div class="row">
+              <img src="<?php echo $buktitranspl; ?>" style="margin-left: 340px" height="250" weight="250">
+            </div>
+            <div class="row mb-3 mt-4">
+              <div class="col-md-12" style="margin-left: 150px">
+                <p>Bukti Transfer Sudah di Upload</p>
+                <p>Pelelang Sudah Mengkonfirmasi Penerimaan Transfer</p>
+                <p>Transaksi Selesai</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php
+      } else { ?>
+      <div class="input-group mb-3 mt-4">
+        <div class="costum-file">
+          <div class="row">
+            <p>Belum Upload Bukti</p>
+          </div>
+          <div class="row mb-3 mt-4">
+            <div class="col-md-12" style="margin-left: 200px">
+              <form method="post" enctype="multipart/form-data" action="prosesuploadbuktiadm.php">
+              <input type="file" name="gambar" id="inputGroupfile03" aria-describedby="inputGroupfileAddon03" height="300">
+              <input type="hidden" name="idtranspl" value="<?php echo $idtranspl; ?>">
+            </div>
+          </div>
+          <div class="row">
+              <button type="submit" name="upload" style="margin-left: 470px" class="btn btn-primary">Upload Bukti Transfer</button>
+            </form>
+          </div>
+         </div>
+        </div>
+        <?php
+      }?>
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
           </div>
         </div>
       </footer>
@@ -371,15 +402,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Anda yakin akan keluar?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Klik "Logout" jika anda ingin logout</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+          <a class="btn btn-primary" href="logoutadmin.php">Logout</a>
         </div>
       </div>
     </div>

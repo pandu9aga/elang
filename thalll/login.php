@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Login</title>
+  <title>Login Admin</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,23 +39,32 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
                   </div>
-				  
-                  <form class="user" id="login" name="login" action="ceklogin.php" method="post">
+                  <?php
+                  if(isset($_GET['pesan'])){
+                    if($_GET['pesan'] == "logout"){
+                      echo "Anda telah berhasil logout";
+                    } else {
+                      echo "Anda gagal logout";
+                    }
+                  }
+                  ?>
+                  <figure><img src="elang.PNG" alt="sing up image"></figure>
+                  <form class="user" id="login" name="loginadm" action="prosesloginadm.php" method="post">
                     <div class="form-group">
-                      <input type="text" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="userHelp" placeholder="Enter Username...">
+                      <input type="text" name="nama_admin" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="userHelp" placeholder="Username...">
                     </div>
                     <div class="form-group">
-                      <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" name="password_admin" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        <label class="custom-control-label" for="customCheck">Ingat Saya</label>
                       </div>
                     </div>
-                    <button type="submit" name="submit" class="btn btn-primary btn-user btn-block"> Login</button>
+                    <button type="submit" name="submitlogadm" class="btn btn-primary btn-user btn-block"> Login</button>
                   </form>
-				  
+
                   <hr>
                   <div class="text-center">
                     <a class="small" href="forgot-password.php">Lupa kata sandi?</a>
