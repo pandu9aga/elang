@@ -25,6 +25,8 @@ while($dataikan = mysqli_fetch_array($result))
     $gambar = $dataikan['gambar_ikan'];
     $jenis = $dataikan['jenis_ikan'];
     $idpl = $dataikan['id_pelelang'];
+    $status = $dataikan['status_lelang'];
+    $sttkirim = $dataikan['status_kirim'];
 }
 ?>
 <!DOCTYPE html>
@@ -60,7 +62,7 @@ while($dataikan = mysqli_fetch_array($result))
 		<div id="top-bar" class="container">
 			<div class="row">
 				<div class="span4">
-          <a href="homepn.php" class="logo pull-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
+          <img href="homepn.php" width="115px" height="115px" src="elanghome.png" class="site_logo" alt="">
 				</div>
 				<div class="span8">
 					<div class="account pull-right">
@@ -85,15 +87,25 @@ while($dataikan = mysqli_fetch_array($result))
 				</div>
 			</section>
 			<section class="header_text sub">
-			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
+			<a href="homepn.php"><img class="pageBanner" src="themes/images/promo.png" alt="New products" ></a>
 				<h4><span>Product Detail</span></h4>
 			</section>
 			<section class="main-content">
+      <?php
+      if (isset($_GET['saldo'])) {
+        echo "Maaf saldo anda tidak cukup, lakukan topup untuk menambah saldo....!!";
+      }
+       ?>
+       <?php
+       if (isset($_GET['hapus'])) {
+         echo "Hapus tawaran berhasil....!!";
+       }
+        ?>
 				<div class="row">
 					<div class="span9">
 						<div class="row">
 							<div class="span4">
-								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="<?php echo $gambar; ?>"></a>
+								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Info Produk"><img alt="" src="<?php echo $gambar; ?>"></a>
 							</div>
 							<div class="span5">
 								<address>
@@ -112,7 +124,7 @@ while($dataikan = mysqli_fetch_array($result))
                 $tawaran_tertinggipn = $datatwpn['maxpn'];
                 ?>
 								<h4><strong>Tawaran Tertinggi :</strong> Rp. <?php echo rupiah($tawaran_tertinggi); ?></h4>
-                <h4><strong>Tawaran Tertinggi Anda :</strong> Rp. <?php echo rupiah($tawaran_tertinggipn);?></h5>
+                <h4><strong>Tawaran Anda :</strong> Rp. <?php echo rupiah($tawaran_tertinggipn);?></h5>
                 <?php
                 if ($tawaran_tertinggipn > 0) {
                   if ($tawaran_tertinggi == $tawaran_tertinggipn) {
@@ -121,20 +133,50 @@ while($dataikan = mysqli_fetch_array($result))
                     echo "Tawaran anda bukan yang tertinggi...!!<br>";
                   }
                 }
-                $mintawaran = $tawaran_tertinggi + 1;
+                if ($status == 'berlangsung') { ?>
+                  <br><a href="hapustawaran.php?id_penawar=<?php echo $id_penawar;?>&id_ikan=<?php echo $id_ikan;?>"><button class="btn btn-inverse"name="delete">Hapus Tawaran</button></a>
+                <?php
+                  $mintawaran = $tawaran_tertinggi + 1;
+                  ?>
+                  <div class="span5">
+    								<form class="form-inline" method="post" action="tawaran.php">
+    									<p>&nbsp;</p>
+    									<label>Masukkan Tawaran : Rp.</label>
+    									<input type="number" min="<?php echo $mintawaran; ?>"class="span2" name="tawaran" placeholder="masukan harga">
+                      <input type="hidden" name="penawar" value="<?php echo $id_penawar; ?>">
+                      <input type="hidden" name="ikan" value="<?php echo $id_ikan; ?>">
+    									<button class="btn btn-inverse" type="submit" name="submittawaran">+</button>
+    								</form>
+    							</div>
+                <?php
+                }
                 ?>
-                <br><a href="hapustawaran.php?id_penawar=<?php echo $id_penawar;?>&id_ikan=<?php echo $id_ikan;?>"><button class="btn btn-inverse"name="delete">Hapus Tawaran</button></a>
 							</div>
-							<div class="span5">
-								<form class="form-inline" method="post" action="tawaran.php">
-									<p>&nbsp;</p>
-									<label>Masukkan Tawaran : Rp.</label>
-									<input type="number" min="<?php echo $mintawaran; ?>"class="span2" name="tawaran" placeholder="masukan harga">
-                  <input type="hidden" name="penawar" value="<?php echo $id_penawar; ?>">
-                  <input type="hidden" name="ikan" value="<?php echo $id_ikan; ?>">
-									<button class="btn btn-inverse" type="submit" name="submittawaran">+</button>
-								</form>
-							</div>
+              <?php
+              if ($status == 'selesai') { ?>
+                <div class="span5">
+                  <h3>Pelelangan Selesai</h3>
+                  <?php
+                  if ($tawaran_tertinggipn==$tawaran_tertinggi) {
+                    if ($sttkirim=='kirim') { ?>
+                      <p>Produk sedang dikirim ke alamat anda</p>
+                      <p>Konfirmasi produk telah diterima : <a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Konfirmasi</button></a></p>
+                    <?php
+                    } elseif ($sttkirim=='terima') { ?>
+                      <p>Produk telah diterima oleh anda...transaksi pelelang sukses</p>
+                    <?php
+                    } else {
+                      echo "Anda memenangkan pelelangan ini...!! ";
+                      echo "Menunggu pelelang mengirim produk ini";
+                    }
+                  } else {
+                    echo "Anda tidak memenangkan pelelangan ini";
+                  }
+                   ?>
+  							</div>
+              <?php
+              }
+               ?>
 						</div>
 						<div class="row">
 							<div class="span9">
@@ -185,12 +227,9 @@ while($dataikan = mysqli_fetch_array($result))
 							<div class="span9">
 								<br>
 								<h4 class="title">
-									<span class="pull-left"><span class="text"><strong>Produk</strong> Lainnya</span></span>
-									<span class="pull-right">
-										<a class="left button" href="#myCarousel-1" data-slide="prev"></a><a class="right button" href="#myCarousel-1" data-slide="next"></a>
-									</span>
+									<span class="pull-left"><span class="text"><strong>Info</strong> Produk</span></span>
+									<span class="pull-right"></span>
 								</h4>
-
 						</div>
 					</div>
 				</div>
@@ -259,7 +298,7 @@ while($dataikan = mysqli_fetch_array($result))
 					closeEffect : 'none'
 				});
 
-				$('#myCarousel-2').carousel({
+				$('#myCarousel-1').carousel({
                     interval: 2500
                 });
 			});

@@ -92,7 +92,6 @@ function rupiah($angka){
   						    ?>
                   <tr>
                     <th><h4><?php echo $data['jenis_ikan']; ?></h4></th>
-                    <th><h5>Pelelang</h5></th>
   									<th><h5>Ukuran</h5></th>
   									<th><h5>Tawaran Anda</h5></th>
   									<th><h5>Tawaran Tertinggi</h5></th>
@@ -104,12 +103,7 @@ function rupiah($angka){
                     <?php
                     $id_ikan = $data['id_ikan'];
                     $waktulelang = $data['waktu_lelang'];
-                    $datapl = mysqli_query($mysqli,"SELECT * FROM ikan i inner join pelelang p on i.id_pelelang=p.id_pelelang WHERE id_ikan = '$id_ikan'");
-                    $isidatapl = mysqli_fetch_assoc($datapl);
-                    $idpl = $isidatapl['id_pelelang'];
-                    $namapl = $isidatapl['nama_pelelang'];
                      ?>
-                    <td><?php echo "<a href='viewprofilpl.php?id_pelelang=".$idpl."'>".$namapl."</a>"; ?></td>
   									<td><input type="text" readonly value="<?php echo $data['ukuran']; ?> kg" class="input-mini"></td>
   									<td>Rp. <?php echo rupiah($data['jumlah_tawaran']); ?></td>
                     <?php
@@ -120,6 +114,29 @@ function rupiah($angka){
                     ?>
   									<td>Rp. <?php echo rupiah($tawaran_tertinggi); ?></td>
                     <td><?php echo $waktulelang; ?></td>
+                    <?php
+                    if ($data['status_lelang']=='berlangsung') { ?>
+                      <td>Berlangsung</td>
+                    <?php
+                    } else {
+                      if ($data['jumlah_tawaran']==$tawaran_tertinggi) {
+                        if ($data['status_kirim']=='kirim') { ?>
+                          <td>Win!! Produk sedang dikirim<a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Telah diterima</button></a></td>
+                        <?php
+                        } elseif ($data['status_kirim']=='terima') { ?>
+                          <td>Win!! Pelelangan Selesai</td>
+                        <?php
+                        } else { ?>
+                        <td>Win!! Tunggu pelelang mengirim produknya</td>
+                        <?php
+                        }?>
+                      <?php
+                      } else { ?>
+                        <td>Maaf anda kalah pelelangan</td>
+                        <?php
+                      }
+                    }
+                    ?>
   								</tr>
                   <?php
                   }
@@ -134,11 +151,6 @@ function rupiah($angka){
                 </li>
 							</ul>
 						</div>
-						<p class="buttons center">
-							<button class="btn" type="button">Update</button>
-							<button class="btn" type="button">Continue</button>
-							<button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>
-						</p>
 					</div>
 				</div>
 			</section>

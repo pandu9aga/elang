@@ -13,6 +13,12 @@ while($dataikan = mysqli_fetch_array($result))
     $gambar = $dataikan['gambar_ikan'];
     $jenis = $dataikan['jenis_ikan'];
     $idpl = $dataikan['id_pelelang'];
+    $status = $dataikan['status_lelang'];
+    $sttkirim = $dataikan['status_kirim'];
+}
+function rupiah($angka){
+  $hasil_rupiah = number_format($angka,0,',','.');
+  return $hasil_rupiah;
 }
 ?>
 <!DOCTYPE html>
@@ -72,19 +78,15 @@ while($dataikan = mysqli_fetch_array($result))
 					<div class="span9">
 						<div class="row">
 							<div class="span4">
-								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img alt="" src="<?php echo $gambar; ?>"></a>
+								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Gambar Produk"><img alt="" src="<?php echo $gambar; ?>"></a>
 							</div>
 							<div class="span5">
 								<address>
 									<strong>Jenis Ikan:</strong> <span><?php echo $jenis; ?></span><br>
 									<strong>Waktu Pelelangan:</strong> <span><?php echo $waktulelang; ?></span><br>
-                  <strong>Harga Awal:</strong> <span>Rp. <?php echo $harga; ?></span><br>
+                  <strong>Harga Awal:</strong> <span>Rp. <?php echo rupiah($harga); ?></span><br>
 								</address>
                 <?php
-                function rupiah($angka){
-  								$hasil_rupiah = number_format($angka,0,',','.');
-  								return $hasil_rupiah;
-  							}
                 $sqltw = "SELECT MAX(jumlah_tawaran) AS max FROM tawaran WHERE id_ikan = '$id_ikan'";
                 $resulttw = mysqli_query($mysqli,$sqltw);
                 $datatw = mysqli_fetch_array($resulttw);
@@ -92,10 +94,59 @@ while($dataikan = mysqli_fetch_array($result))
                 $sqlpn = "SELECT * FROM tawaran t inner join penawar p on t.id_penawar=p.id_penawar WHERE id_ikan = '$id_ikan' and jumlah_tawaran = '$tawaran_tertinggi'";
                 $resultpn = mysqli_query($mysqli,$sqlpn);
                 $datapn = mysqli_fetch_array($resultpn);
+                $idhightw = $datapn['id_tawaran'];
                 $penawar_tertinggi = $datapn['nama_penawar'];
                 $idpn_tertinggi = $datapn['id_penawar'];
+                $alamatpn = $datapn['alamat_penawar'];
                 ?>
 								<h4><strong>Tawaran Tertinggi : Rp. <?php echo rupiah($tawaran_tertinggi); ?></strong> oleh <strong><?php echo "<a href='viewprofilpn.php?id_penawar=".$idpn_tertinggi."'>".$penawar_tertinggi."</a>";?></strong></h4>
+                <?php
+                if ($status=='berlangsung') {
+                  echo "Pelelangan sedang berlangsung";
+                }else {
+                  echo "Pelelangan selesai";
+                  if ($tawaran_tertinggi>0) {
+                    if ($sttkirim=='kirim') { ?>
+                      <p>Produk sedang dikirim, tunggu konfirmasi diterima oleh pemenang</p>
+                    <?php
+                    } elseif ($sttkirim=='terima'){
+                      $cekwin = mysqli_query($mysqli, "SELECT * FROM pemenang WHERE id_tawaran='$idhightw'");
+                      $datawin = mysqli_fetch_array($cekwin);
+                      $idwin = $datawin['id_pemenang'];
+                      $cektrans = mysqli_query($mysqli, "SELECT * FROM transfer_pelelang WHERE id_pemenang='$idwin'");
+                      $datatrans = mysqli_fetch_array($cektrans);
+                      $idtranspl = $datatrans['id_transfer_pelelang'];
+                      $stattrans = $datatrans['status_transpelelang'];
+                      $buktiimg = $datatrans['bukti_transpelelang'];
+                      if ($stattrans=='kirim') { ?>
+                        <p>Bukti Telah Diupload oleh Admin :</p>
+                        <a  data-toggle="modal" data-target="#buktitransfer">
+                          <img src="<?php echo $buktiimg; ?>" alt="" width="112" height="77">
+                        </a><br>
+                        <p>Konfirmasi transfer telah diterima : <a href="stattrans.php?idtranspl=<?php echo $idtranspl; ?>&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmtrans">Konfirmasi</button></a></p>
+                      <?php
+                      } elseif ($stattrans=='konfirm') { ?>
+                        <br><br>
+                        Bukti Transfer : <a  data-toggle="modal" data-target="#buktitransfer">
+                          <img src="<?php echo $buktiimg; ?>" alt="" width="112" height="77">
+                        </a><br><br>
+                        <p>Anda Telah Menerima Transfer dari Admin</p>
+                        <p>Transaksi Pelelangan Selesai</p>
+                      <?php
+                      } else { ?>
+                        <p>Produk telah diterima, tunggu admin mengupload bukti transfer ke rekening anda</p>
+                      <?php
+                      }
+                    } else { ?>
+                      <p>Pelelangan dimenangkan oleh : <?php echo "<a href='viewprofilpn.php?id_penawar=".$idpn_tertinggi."'>".$penawar_tertinggi."</a>";?></p>
+                      <p>Segera lakukan pengiriman ke alamat : <?php echo $alamatpn; ?></p>
+                      <p>Konfirmasi produk telah dikirim : <a href="kirim.php?kirim=kirim&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmkirim">Konfirmasi</button></a></p>
+                  <?php }
+                } else {
+                  echo "Pelelangan gagal...tidak ada pemenang";
+                }
+                }
+                 ?>
 							</div>
 						</div>
 						<div class="row">
@@ -144,12 +195,16 @@ while($dataikan = mysqli_fetch_array($result))
 									</div>
 								</div>
 							</div>
-							<div class="span9">
-								<br>
-								<h4 class="title">
-									<span class="pull-left"><a href="hapusproduk.php?id_ikan=<?php echo $id_ikan; ?>"><button class="btn btn-inverse"name="delete">Hapus</button></a></span>
-								</h4>
-						</div>
+              <?php
+              if ($status=='berlangsung') { ?>
+                <div class="span9">
+  								<br>
+  								<h4 class="title">
+  									<span class="pull-left"><a href="hapusproduk.php?id_ikan=<?php echo $id_ikan; ?>"><button class="btn btn-inverse"name="delete">Hapus</button></a></span>
+  								</h4>
+  						</div>
+              <?php
+              } ?>
 					</div>
 				</div>
 			</div>
@@ -179,6 +234,22 @@ while($dataikan = mysqli_fetch_array($result))
 				<span>Copyright 2013 bootstrappage template  All right reserved.</span>
 			</section>
 		</div>
+    <div class="modal fade" id="buktitransfer" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="buktiTransferLabel">Bukti Transfer</h5>
+          </div>
+          <div class="modal-body">
+            <img src="<?php echo $buktiimg; ?>" width="540" height="372">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
 		<script src="themes/js/common.js"></script>
 		<script>
 			$(function () {

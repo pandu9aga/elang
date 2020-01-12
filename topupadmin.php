@@ -44,15 +44,15 @@ function rupiah($angka){
       <hr class="sidebar-divider my-0">
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="topupadmin.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Top-up Penawar</span></a>
       </li>
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="transferadmin.php">
           <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
+          <span>Transfer Pelelang</span></a>
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -228,7 +228,7 @@ function rupiah($angka){
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Admin Top Up</h1>
+          <h1 class="h3 mb-4 text-gray-800">Top-Up Admin</h1>
           <?php
           $halaman = 5;
           $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
@@ -269,9 +269,10 @@ function rupiah($angka){
               </div>
             </div>
             <div class="col-md-7">
-              <p><?php echo $data['waktu']; ?></p>
-              <p><?php echo $data['nama_penawar']; ?></p>
-              <p>Rp. <?php echo rupiah($data['nominal']); ?></p>
+              <p>Waktu top-up : <?php echo $data['waktu']; ?></p>
+              <p>Nama akun : <?php echo $data['nama_penawar']; ?></p>
+              <p>Nama rekening : <?php echo $data['nama_rek']; ?></p>
+              <p>Nominal : Rp. <?php echo rupiah($data['nominal']); ?></p>
               <?php
               $id_bank = $data['id_bank'];
               $bank = mysqli_query($mysqli,"SELECT * FROM bank_admin WHERE id_bank='$id_bank'");
@@ -347,15 +348,15 @@ function rupiah($angka){
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Anda yakin akan keluar?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Klik "Logout" jika anda ingin logout</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+          <a class="btn btn-primary" href="logoutadmin.php">Logout</a>
         </div>
       </div>
     </div>

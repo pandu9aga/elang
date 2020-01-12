@@ -29,7 +29,7 @@ if(isset($_POST['submitproduk'])) {
     imagedestroy($source);
     imagedestroy($filesave);
     imagedestroy($upload_image);
-    $result = mysqli_query($mysqli, "INSERT INTO ikan (jenis_ikan,ukuran,waktu_lelang,harga_ikan,spesifikasi,id_pelelang,status_lelang,gambar_ikan) VALUES('$jenis','$berat','$waktu','$hargaawal','$deskripsi','$idpl','$status','$resize_image')");
+    $result = mysqli_query($mysqli, "INSERT INTO ikan (jenis_ikan,ukuran,waktu_lelang,harga_ikan,spesifikasi,id_pelelang,status_lelang,gambar_ikan,status_kirim) VALUES('$jenis','$berat','$waktu','$hargaawal','$deskripsi','$idpl','$status','$resize_image','')");
     header("location:homepl.php");
 }
 ?>

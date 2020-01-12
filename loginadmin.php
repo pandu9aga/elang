@@ -1,55 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Admin</title>
-    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="css/style.css">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Login Admin</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
 </head>
-<body>
-    <div class="main">
-        <section class="sign-in">
-            <div class="container">
-                <div class="signin-content">
-                    <div class="signin-image">
-                        <figure><img src="elang.PNG" alt="sing up image"></figure>
-                        <a href="regispn.php" class="signup-image-link">Buat akun</a>
+
+<body class="bg-gradient-primary">
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6"><br><br><br><br><figure><img src="elang.PNG" alt="sing up image"></figure></br></br></br></br></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
+                  </div>
+                  <?php
+                  if(isset($_GET['pesan'])){
+                    if($_GET['pesan'] == "logout"){
+                      echo "Anda telah berhasil logout";
+                    } else {
+                      echo "Anda gagal logout";
+                    }
+                  }
+                  ?>
+                  <form class="user" id="login" name="loginadm" action="prosesloginadm.php" method="post">
+                    <div class="form-group">
+                      <input type="text" name="nama_admin" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="userHelp" placeholder="Username...">
                     </div>
-                    <div class="signin-form">
-                        <h2 class="form-title">Login Admin</h2><?php
-                        if(isset($_GET['pesan'])){
-                          if($_GET['pesan'] == "logout"){
-                            echo "Anda telah berhasil logout";
-                          } else {
-                            echo "Anda gagal logout";
-                          }
-                        }
-                        ?>
-                        <form class="register-form" id="login-form"action="prosesloginadm.php" method="post" name="formlogadm">
-                            <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="nama_admin" placeholder="Username"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password_admin" placeholder="Password"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Ingat saya</label>
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="submitlogadm" value="Masuk" id="signin" class="form-submit"/>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                      <input type="password" name="password_admin" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Ingat Saya</label>
+                      </div>
+                    </div>
+                    <button type="submit" name="submitlogadm" class="btn btn-primary btn-user btn-block"> Login</button>
+                  </form>
+
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" href="forgot-password.php">Lupa kata sandi?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.php">Buat Akun Baru!</a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+
+      </div>
+
     </div>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>
