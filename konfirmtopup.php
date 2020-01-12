@@ -16,7 +16,11 @@ if(isset($_GET['id_transfer']))
     $id_penawar = $datapn['id_penawar'];
     $nominal = $datapn['nominal'];
   }
-  $topup = mysqli_query($mysqli, "UPDATE penawar SET saldo='$nominal' WHERE id_penawar='$id_penawar'");
+  $pn = mysqli_query($mysqli, "SELECT * FROM penawar WHERE id_penawar='$id_penawar'");
+  $datapn = mysqli_fetch_array($pn);
+  $saldo = $datapn['saldo'];
+  $plussaldo = $saldo + $nominal;
+  $topup = mysqli_query($mysqli, "UPDATE penawar SET saldo='$plussaldo' WHERE id_penawar='$id_penawar'");
   header("location: topupadmin.php");
   }
   }

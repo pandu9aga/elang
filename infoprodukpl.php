@@ -16,6 +16,10 @@ while($dataikan = mysqli_fetch_array($result))
     $status = $dataikan['status_lelang'];
     $sttkirim = $dataikan['status_kirim'];
 }
+function rupiah($angka){
+  $hasil_rupiah = number_format($angka,0,',','.');
+  return $hasil_rupiah;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,13 +84,9 @@ while($dataikan = mysqli_fetch_array($result))
 								<address>
 									<strong>Jenis Ikan:</strong> <span><?php echo $jenis; ?></span><br>
 									<strong>Waktu Pelelangan:</strong> <span><?php echo $waktulelang; ?></span><br>
-                  <strong>Harga Awal:</strong> <span>Rp. <?php echo $harga; ?></span><br>
+                  <strong>Harga Awal:</strong> <span>Rp. <?php echo rupiah($harga); ?></span><br>
 								</address>
                 <?php
-                function rupiah($angka){
-  								$hasil_rupiah = number_format($angka,0,',','.');
-  								return $hasil_rupiah;
-  							}
                 $sqltw = "SELECT MAX(jumlah_tawaran) AS max FROM tawaran WHERE id_ikan = '$id_ikan'";
                 $resulttw = mysqli_query($mysqli,$sqltw);
                 $datatw = mysqli_fetch_array($resulttw);

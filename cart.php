@@ -121,8 +121,7 @@ function rupiah($angka){
                     } else {
                       if ($data['jumlah_tawaran']==$tawaran_tertinggi) {
                         if ($data['status_kirim']=='kirim') { ?>
-                          <td>Win!! Produk sedang dikirim</td>
-                          <a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Telah diterima</button></a>
+                          <td>Win!! Produk sedang dikirim<a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Telah diterima</button></a></td>
                         <?php
                         } elseif ($data['status_kirim']=='terima') { ?>
                           <td>Win!! Pelelangan Selesai</td>
