@@ -23,10 +23,10 @@ function rupiah($angka){
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
 		<!-- bootstrap -->
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">      
-		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">		
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="themes/css/bootstrappage.css" rel="stylesheet"/>
-		
+
 		<!-- global styles -->
 		<link href="themes/css/flexslider.css" rel="stylesheet"/>
 		<link href="themes/css/main.css" rel="stylesheet"/>
@@ -38,12 +38,12 @@ function rupiah($angka){
 		<script src="js/material.min.js"></script>
 		<link href="themes/css/material-icon.css" rel="stylesheet">
 		<link rel="stylesheet" href="themes/css/application.min.css">
-		
+
 
 		<!-- scripts -->
 		<script src="themes/js/jquery-1.7.2.min.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>				
-		<script src="themes/js/superfish.js"></script>	
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="themes/js/superfish.js"></script>
 		<script src="themes/js/jquery.scrolltotop.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -56,7 +56,7 @@ function rupiah($angka){
 		<div id="top-bar" class="container">
 			<div class="row">
 				<div class="span4">
-					<a href="index.html" class="logo pull-left"><img width="200px" height="115px" src="Elang.png" class="site_logo" alt=""></a>
+					<a href="index.html" class="logo pull-left"><img width="200px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
 				</div>
 				<nav id="menu" class="pull-right">
 						<ul><li><a><div class="caption" ><center>CASH</center></div>
@@ -76,26 +76,26 @@ function rupiah($angka){
             				<ul class="span3">
 									<li>
 										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Tuna 60 KG</a>
-										
+
 									</li>
 									<li>
 										<a href="./products.html"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Anda Kalah Lelang Ikan Tongkol 30 KG</a>
-										
+
 									</li>
 									<li>
 										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Kerapu 25 KG</a>
-										
+
 									</li>
 							</ul>
 							</li>
 							<li>
 								<a href="./products.html"><i class="material-icons">account_box</i>
 									<div class="caption" >PROFILE</div></a>
-							</li>															
+							</li>
 							<li>
 								<a href="./products.html"><i class="material-icons">add_shopping_cart</i>
 									<div class="caption" >CART</div></a>
-							</li>		
+							</li>
 							<li><a><i class="material-icons">account_balance_wallet</i>
 								<div class="caption" >TOPUP</div></a>
 								<ul>
@@ -106,12 +106,12 @@ function rupiah($angka){
 										<a href="./products.html"><img width="25px" height="20px" src="clock.png" class="site_logo" alt="">Cart Topup</a>
 									</li>
 								</ul>
-							</li>							
+							</li>
 							<li>
 								<a href="./products.html"><i class="material-icons">exit_to_app</i>
 									<div class="caption" >LOGOUT</div></a>
 							</li>
-							
+
 						</ul>
 					</nav>
 			</div>
