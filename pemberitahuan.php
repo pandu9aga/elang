@@ -18,7 +18,7 @@ function rupiah($angka){
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Home Penawar</title>
+		<title>Pemberitahuan</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
@@ -203,121 +203,125 @@ function rupiah($angka){
 			</div>
 		</div>
 		<div id="wrapper" class="container">
-    <div class="navbar-inner main-menu center">
-    </div>
-			<section class="header_text sub">
-			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
-				<h4><span>Ikan Segar Untuk Anda</span></h4>
+      <section class="navbar main-menu">
+				<div class="navbar-inner main-menu">
+
+				</div>
 			</section>
 			<section class="main-content">
 				<div class="row">
-					<div class="span9">
-            <?php
-            if (isset($_GET['pesan'])) {
-              $pesan = $_GET['pesan'];
-              if ($pesan=="hapustopup") {
-                echo "Batalkan Top Up berhasil";
-              }
-            } ?>
-						<ul class="thumbnails listing-products">
-							<?php
-						  $halaman = 9;
-						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
-						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
-						  $result = mysqli_query($mysqli,"SELECT * FROM ikan");
-						  $total = mysqli_num_rows($result);
-						  $pages = ceil($total/$halaman);
-						  $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
-						  $no =$mulai+1;
-							if (isset($_GET['jenis'])) {
-								$getjenis = $_GET['jenis'];
-                $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE jenis_ikan = '$getjenis' and status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
-  						  $no =$mulai+1;
-  						  while ($data = mysqli_fetch_assoc($query)) {
-  						    ?>
-  								<li class="span3">
-  									<div class="product-box">
-  										<a href="infoproduk.php?id_ikan=<?php echo $data['id_ikan'];?>">
-  										<span class="sale_tag"></span>
-  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" src="<?php echo $data['gambar_ikan']; ?>"></a><br/>
-  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="title"><?php echo $data['jenis_ikan']; ?>
-  										</a><br/>
-  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
-  										<br/>
-  										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
-  										<p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p>
-  										</a>
-  									</div>
-  								</li>
-  						    <?php
-  						  }
-  						  ?>
-  						</table>
-  						</ul>
-  						<hr>
-  						<div class="pagination pagination-medium pagination-centered">
-  							<ul>
-  								<li>
-  								  <?php for ($i=1; $i<=$pages ; $i++){ ?>
-  								  <a href="?halaman=<?php echo $i;?>"><?php echo $i; ?></a>
-  								  <?php } ?>
-  								</li>
-  							</ul>
-  						</div>
-              <?php
-						} else {
-							while ($data = mysqli_fetch_assoc($query)) {
-						    ?>
-								<li class="span3">
-									<div class="product-box">
-										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>">
-										<span class="sale_tag"></span>
-										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" src="<?php echo $data['gambar_ikan']; ?>"></a><br/>
-										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="title"><?php echo $data['jenis_ikan']; ?>
-										</a><br/>
-										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
-										<br/>
-										<a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
-										<p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p>
-										</a>
-									</div>
-								</li>
-						    <?php
-						  }
-						  ?>
+					<div class="span12">
+					  <h4 class="title"><span class="text"><strong>NOTIF</strong>IKASI</span></h4>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+                                <th class="mdl-data-table__cell--non-numeric"></th>
+                                <th class="mdl-data-table__cell--non-numeric">Notifikasi</th>
+								<th class="mdl-data-table__cell--non-numeric"></th>
+                                <th class="mdl-data-table__cell--non-numeric"><center>Status</center></th>
+								<th class="mdl-data-table__cell--non-numeric"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              $querynotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_penawar = '$id_penawar'");
+                              while ($datanotif = mysqli_fetch_array($querynotif)) {
+                                $idnottf = $datanotif['id_transfer'];
+                                $idnottw = $datanotif['id_tawaran'];
+                                $bacanot = $datanotif['baca'];
+                                if ($idnottf!=0) {
+                                    $notquerytf = mysqli_query($mysqli, "SELECT * FROM transfer WHERE id_transfer = '$idnottf'");
+                                    $notdatatf = mysqli_fetch_array($notquerytf);
+                                    $notbuktitrans = $notdatatf['bukti_transfer'];
+                                    $notstttrans = $notdatatf['status_transfer'];
+                                    $notnominal = $notdatatf['nominal'];
+                                    if ($notbuktitrans=="") { ?>
+                                      <tr>
+                                          <td class="mdl-data-table__cell--non-numeric"></td>
+                                          <td class="mdl-data-table__cell--non-numeric">Upload Bukti Topup Rp. <?php echo rupiah($notnominal); ?><br/><a href="uploadbukti.php?id_transfer=<?php echo $idnottf; ?>"><h7> lihat selengkapnya</h7></a></td>
+          								                <th class="mdl-data-table__cell--non-numeric"></th>
+                                          <td class="mdl-data-table__cell--non-numeric"><center><span class="label label--mini mdl-color--red">Belum Upload</span></center> </td>
+
+                                      </tr>
+                                    <?php
+                                    }elseif ($notstttrans=="gagal") {
+                                      if ($bacanot=="belum") { ?>
+                                        <tr>
+                                            <td class="mdl-data-table__cell--non-numeric"></td>
+                                            <td class="mdl-data-table__cell--non-numeric">Topup Sebanyak Rp. <?php echo rupiah($notnominal); ?> Gagal<br/><a href="bacanotif.php?id_transfer=<?php echo $idnottf; ?>"><h7> lihat selengkapnya</h7></a></td>
+            								                <th class="mdl-data-table__cell--non-numeric"></th>
+                                            <td class="mdl-data-table__cell--non-numeric"><center><span class="label label--mini mdl-color--red">Topup Gagal</span></center> </td>
+
+                                        </tr>
+                                    <?php
+                                      }
+                                    }elseif ($notstttrans=="konfirm") {
+                                      if ($bacanot=="belum") { ?>
+                                        <tr>
+                                            <td class="mdl-data-table__cell--non-numeric"></td>
+                                            <td class="mdl-data-table__cell--non-numeric">Topup Sebanyak Rp. <?php echo rupiah($notnominal); ?> Berhasil<br/><a href="bacanotif.php?id_transfer=<?php echo $idnottf; ?>"><h7> lihat selengkapnya</h7></a></td>
+            								                <th class="mdl-data-table__cell--non-numeric"></th>
+                                            <td class="mdl-data-table__cell--non-numeric"><center><span class="label label--mini mdl-color--green">Topup Berhasil</span></center> </td>
+
+                                        </tr>
+                                    <?php
+                                      }
+                                    }
+                                }
+                                else {
+                                  $notquerytw = mysqli_query($mysqli, "SELECT * FROM tawaran WHERE id_tawaran = '$idnottw'");
+                                  $notdatatw = mysqli_fetch_array($notquerytw);
+                                  $notjumtw = $notdatatw['jumlah_tawaran'];
+                                  $notidikan = $notdatatw['id_ikan'];
+                                  $notqueryik = mysqli_query($mysqli, "SELECT * FROM ikan WHERE id_ikan = '$notidikan'");
+                                  $notdataik = mysqli_fetch_array($notqueryik);
+                                  $jenikan = $notdataik['jenis_ikan'];
+                                  $notstatkirim = $notdataik['status_kirim'];
+                                  $notquerywin = mysqli_query($mysqli, "SELECT * FROM pemenang WHERE id_tawaran = '$idnottw'");
+                                  $notwin = mysqli_fetch_array($notquerywin);
+                                  $notidwin = $notwin['id_pemenang'];
+                                  if ($bacanot=="belum") {
+                                    if ($notidwin=="") { ?>
+                                      <tr>
+                                          <td class="mdl-data-table__cell--non-numeric"></td>
+                                          <td class="mdl-data-table__cell--non-numeric">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Dilewati, Saldo Anda Kembali<br/><a href="bacanotif.php?id_ikan=<?php echo $notidikan; ?>&id_tawaran=<?php echo $idnottw; ?>"><h7> lihat selengkapnya</h7></a></td>
+                                          <th class="mdl-data-table__cell--non-numeric"></th>
+                                          <td class="mdl-data-table__cell--non-numeric"><center><span class="label label--mini mdl-color--green">Tawaran Dilewati</span></center> </td>
+
+                                      </tr>
+                                    <?php
+                                    }else {
+                                      if ($notstatkirim=="") { ?>
+                                        <tr>
+                                            <td class="mdl-data-table__cell--non-numeric"></td>
+                                            <td class="mdl-data-table__cell--non-numeric">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Selesai, Anda Memenangkan Pelelangan<br/><a href="bacanotif.php?id_ikan=<?php echo $notidikan; ?>&id_tawaran=<?php echo $idnottw; ?>"><h7> lihat selengkapnya</h7></a></td>
+                                            <th class="mdl-data-table__cell--non-numeric"></th>
+                                            <td class="mdl-data-table__cell--non-numeric"><center><span class="label label--mini mdl-color--green">Menunggu Dikirim</span></center> </td>
+
+                                        </tr>
+                                      <?php
+                                      }elseif ($notstatkirim=="kirim") { ?>
+                                        <tr>
+                                            <td class="mdl-data-table__cell--non-numeric"></td>
+                                            <td class="mdl-data-table__cell--non-numeric">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Selesai, Produk Telah Dikirim<br/><a href="infoprodukpn.php?id_ikan=<?php echo $notidikan; ?>"><h7> lihat selengkapnya</h7></a></td>
+                                            <th class="mdl-data-table__cell--non-numeric"></th>
+                                            <td class="mdl-data-table__cell--non-numeric"><center><span class="label label--mini mdl-color--green">Sedand Dikirim</span></center> </td>
+
+                                        </tr>
+                                      <?php
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                               ?>
+							</tbody>
 						</table>
-						</ul>
-						<hr>
-						<div class="pagination pagination-medium pagination-centered">
-							<ul>
-								<li>
-								  <?php for ($i=1; $i<=$pages ; $i++){ ?>
-								  <a href="?halaman=<?php echo $i;?>"><?php echo $i; ?></a>
-								  <?php } ?>
-								</li>
-							</ul>
-						</div>
-					<?php  } ?>
-					</div>
-					<div class="span3 col">
-						<div class="block">
-							<ul class="nav nav-list">
-								<a><img width="115px" height="115px" src="Elang.png" class="site_logo" alt=""></a>
-								<li class="nav-header">JENIS IKAN</li>
-                <li><a href="homepn.php">Semua Jenis</a></li>
-                <?php
-                $queryjenis = mysqli_query($mysqli,"SELECT * FROM ikan group by jenis_ikan");
-  						  while ($jenis = mysqli_fetch_assoc($queryjenis)) {
-                  echo '<li><a href="homepn.php?jenis='.$jenis['jenis_ikan'].'">'.$jenis['jenis_ikan'].'</a></li>';
-                }
-  						    ?>
-							</ul>
-							<br/>
-						</div>
+						<hr/>
 					</div>
 				</div>
 			</section>
-			<section id="footer-bar">
+      <section id="footer-bar">
 				<div class="row">
 					<div class="span3">
 						<h4>Navigation</h4>

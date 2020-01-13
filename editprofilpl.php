@@ -58,7 +58,7 @@ while($datapl = mysqli_fetch_array($result))
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title> Edit  Profil Pelelang</title>
+		<title>Edit Profil Pelelang</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
@@ -83,24 +83,27 @@ while($datapl = mysqli_fetch_array($result))
 		<![endif]-->
 	</head>
     <body>
-		<div id="top-bar" class="container">
-			<div class="row">
-				<div class="span4">
-					<a href="homepl.php" class="logo-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
-				</div>
-				<div class="span8">
-					<div class="account pull-right">
-						<ul class="user-menu">
-							<li><a href="profilpl.php">Profil</a></li>
-							<li><a href="uploadproduk.php">+ Produk</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
-							<li><a href="logoutpl.php">Logout</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div id="top-bar" class="container">
+  			<div class="row">
+  				<div class="span4">
+  					<a href="homepl.php" class="logo-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
+  				</div>
+  				<div class="span8">
+  					<div class="account pull-right">
+  						<ul class="user-menu">
+  							<li><a href="profilpl.php">Profil</a></li>
+  							<li><a href="uploadproduk.php">+ Produk</a></li>
+  							<li><a href="lelangselesai.php">Pelelangan Selesai</a></li>
+  							<li><a href="logoutpl.php">Logout</a></li>
+  						</ul>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
 		<div id="wrapper" class="container">
+      <div class="navbar-inner main-menu center">
+      <h4>Edit Profil</h4>
+      </div>
 			<section class="navbar main-menu">
 				<div class="row">
 					<div class="span9">
@@ -143,25 +146,20 @@ while($datapl = mysqli_fetch_array($result))
 				</div>
 			</div>
 			</section>
-			<section id="footer-bar">
+      <section id="footer-bar">
 				<div class="row">
 					<div class="span3">
-						<h4>Navigation</h4>
+						<h4>Navigasi</h4>
 						<ul class="nav">
 							<li><a href="homepl.php">Homepage</a></li>
-							<li><a href="./about.html">About Us</a></li>
-							<li><a href="./contact.html">Contac Us</a></li>
-							<li><a href="./cart.html">Your Cart</a></li>
 							<li><a href="logoutpl.php">Logout</a></li>
 						</ul>
 					</div>
 					<div class="span4">
-						<h4>My Account</h4>
+						<h4>Akun Saya</h4>
 						<ul class="nav">
 							<li><a href="profilpl.php">Profil</a></li>
-							<li><a href="#">Order History</a></li>
-							<li><a href="#">Wish List</a></li>
-							<li><a href="#">Newsletter</a></li>
+							<li><a href="lelangselesai.php">Pelelangan Selesai</a></li>
 						</ul>
 					</div>
 				</div>

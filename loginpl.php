@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="elang.PNG" alt="sing up image"></figure>
+                        <figure><a href="main.php" class="signup-image-link"><img src="elang.PNG" alt="sing up image"></figure></a>
                         <a href="regispl.php" class="signup-image-link">Buat akun</a>
                     </div>
                     <div class="signin-form">

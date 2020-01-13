@@ -25,7 +25,7 @@
                                 <input type="email" name="emailpl" placeholder="E-mail"/>
                             </div>
                             <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-phone"></i></label>
+                                <label for="no.telpon"><i class="zmdi zmdi-phone"></i></label>
                                 <input type="number" name="notlppl" placeholder="No. Telpon"/>
                             </div>
                             <div class="form-group">
@@ -57,7 +57,7 @@
                         ?>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="elang.png" alt="sing up image"></figure>
+                        <figure><a href="loginpl.php" class="signup-image-link"><img src="elang.png" alt="sing up image"></figure></a>
                         <a href="loginpl.php" class="signup-image-link">Sudah punya akun</a>
                     </div>
                 </div>

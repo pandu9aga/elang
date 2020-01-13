@@ -65,12 +65,6 @@
                   </form>
 
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="forgot-password.php">Lupa kata sandi?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.php">Buat Akun Baru!</a>
-                  </div>
                 </div>
               </div>
             </div>

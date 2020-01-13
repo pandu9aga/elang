@@ -25,7 +25,7 @@ function rupiah($angka){
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Bootstrap E-commerce Templates</title>
+		<title>Info Produk</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
@@ -51,27 +51,28 @@ function rupiah($angka){
 		<![endif]-->
 	</head>
     <body>
-		<div id="top-bar" class="container">
-			<div class="row">
-				<div class="span4">
-          <a href="homepl.php" class="logo pull-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
-				</div>
-				<div class="span8">
-					<div class="account pull-right">
-						<ul class="user-menu">
-							<li><a href="profilpl.php">Profil</a></li>
-							<li><a href="uploadproduk.php">+ Produk</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
-							<li><a href="logoutpl.php">Logout</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div id="top-bar" class="container">
+  			<div class="row">
+  				<div class="span4">
+  					<a href="homepl.php" class="logo-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
+  				</div>
+  				<div class="span8">
+  					<div class="account pull-right">
+  						<ul class="user-menu">
+  							<li><a href="profilpl.php">Profil</a></li>
+  							<li><a href="uploadproduk.php">+ Produk</a></li>
+  							<li><a href="lelangselesai.php">Pelelangan Selesai</a></li>
+  							<li><a href="logoutpl.php">Logout</a></li>
+  						</ul>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
 		<div id="wrapper" class="container">
+      <div class="navbar-inner main-menu center">
+      </div>
 			<section class="header_text sub">
-			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
-				<h4><span>Product Detail</span></h4>
+				<h4><span>Detail Produk</span></h4>
 			</section>
 			<section class="main-content">
 				<div class="row">
@@ -143,7 +144,7 @@ function rupiah($angka){
                       <p>Konfirmasi produk telah dikirim : <a href="kirim.php?kirim=kirim&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmkirim">Konfirmasi</button></a></p>
                   <?php }
                 } else {
-                  echo "Pelelangan gagal...tidak ada pemenang";
+                  echo "<br>Pelelangan gagal...tidak ada pemenang";
                 }
                 }
                  ?>
@@ -209,29 +210,26 @@ function rupiah($angka){
 				</div>
 			</div>
 			</section>
-			<section id="footer-bar">
+      <section id="footer-bar">
 				<div class="row">
 					<div class="span3">
-						<h4>Navigation</h4>
+						<h4>Navigasi</h4>
 						<ul class="nav">
 							<li><a href="homepl.php">Homepage</a></li>
-							<li><a href="./about.html">About Us</a></li>
-							<li><a href="./contact.html">Contac Us</a></li>
-							<li><a href="uploadproduk.php">+ Produk</a></li>
 							<li><a href="logoutpl.php">Logout</a></li>
 						</ul>
 					</div>
 					<div class="span4">
-						<h4>My Account</h4>
+						<h4>Akun Saya</h4>
 						<ul class="nav">
 							<li><a href="profilpl.php">Profil</a></li>
-							<li><a href="#">Order History</a></li>
+							<li><a href="lelangselesai.php">Pelelangan Selesai</a></li>
 						</ul>
 					</div>
 				</div>
 			</section>
 			<section id="copyright">
-				<span>Copyright 2013 bootstrappage template  All right reserved.</span>
+				<span>Copyright 2019 E_LANG corporation</span>
 			</section>
 		</div>
     <div class="modal fade" id="buktitransfer" tabindex="-1" role="dialog" aria-labelledby="buktiTransferLabel" aria-hidden="true">

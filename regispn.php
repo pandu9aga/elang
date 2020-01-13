@@ -57,7 +57,7 @@
                         ?>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="elang.png" alt="sing up image"></figure>
+                        <figure><a href="loginpn.php" class="signup-image-link"><img src="elang.png" alt="sing up image"></figure></a>
                         <a href="loginpn.php" class="signup-image-link">Sudah punya akun</a>
                     </div>
                 </div>

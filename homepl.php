@@ -42,7 +42,7 @@ $id_pelelang = $_SESSION['id_pelelang'];
 						<ul class="user-menu">
 							<li><a href="profilpl.php">Profil</a></li>
 							<li><a href="uploadproduk.php">+ Produk</a></li>
-							<li><a href="checkout.html">Checkout</a></li>
+							<li><a href="lelangselesai.php">Pelelangan Selesai</a></li>
 							<li><a href="logoutpl.php">Logout</a></li>
 						</ul>
 					</div>
@@ -51,11 +51,13 @@ $id_pelelang = $_SESSION['id_pelelang'];
 		</div>
 		<div id="wrapper" class="container">
 			<section class="header_text sub">
+			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<div class="navbar-inner main-menu">
 				<h4><span>Produk Yang Anda Lelang</span></h4>
 				</div>
 		    </section>
 			<section class="main-content">
+				<a href="lelangselesai.php"><button type="button" name="button">Pelelangan Selesai</button></a>
         <?php
 				if (isset($_GET['hapus'])) {
 					echo "Hapus Produk Berhasil";
@@ -88,18 +90,20 @@ $id_pelelang = $_SESSION['id_pelelang'];
   						  while ($data = mysqli_fetch_assoc($query)) {
   						    ?>
   								<li class="span3">
+									<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>">
   									<div class="product-box">
   										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>">
-  										<span class="sale_tag"></span>
+  										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>"><span class="sale_tag"></span></a>
   										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" src="<?php echo $data['gambar_ikan']; ?>"></a><br/>
   										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>" class="title"><?php echo $data['jenis_ikan']; ?>
   										</a><br/>
   										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>" class="ket"><?php echo $data['ukuran']; ?> Kg</a>
   										<br/>
   										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>" class="category"><?php echo $data['waktu_lelang']; ?></a>
-  										<p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p>
+  										<a href="infoprodukpl.php?id_ikan=<?php echo $data['id_ikan'];?>"><p class="price">Rp. <?php echo rupiah($data['harga_ikan']); ?></p></a>
   										</a>
   									</div>
+										</a>
   								</li>
   						    <?php
   						  }
@@ -166,13 +170,6 @@ $id_pelelang = $_SESSION['id_pelelang'];
   						    ?>
 							</ul>
 							<br/>
-							<ul class="nav nav-list below">
-								<li class="nav-header">WAKTU HABIS</li>
-								<li><a href="products.html">16.00 20/12/2019</a></li>
-								<li><a href="products.html">05.00 21/12/2019</a></li>
-								<li><a href="products.html">10.00 21/12/2019</a></li>
-								<li><a href="products.html">14.00 21/12/2019</a></li>
-							</ul>
 						</div>
 					</div>
 				</div>
@@ -180,22 +177,17 @@ $id_pelelang = $_SESSION['id_pelelang'];
 			<section id="footer-bar">
 				<div class="row">
 					<div class="span3">
-						<h4>Navigation</h4>
+						<h4>Navigasi</h4>
 						<ul class="nav">
 							<li><a href="homepl.php">Homepage</a></li>
-							<li><a href="./about.html">About Us</a></li>
-							<li><a href="./contact.html">Contac Us</a></li>
-							<li><a href="./cart.html">Your Cart</a></li>
 							<li><a href="logoutpl.php">Logout</a></li>
 						</ul>
 					</div>
 					<div class="span4">
-						<h4>My Account</h4>
+						<h4>Akun Saya</h4>
 						<ul class="nav">
 							<li><a href="profilpl.php">Profil</a></li>
-							<li><a href="#">Order History</a></li>
-							<li><a href="#">Wish List</a></li>
-							<li><a href="#">Newsletter</a></li>
+							<li><a href="lelangselesai.php">Pelelangan Selesai</a></li>
 						</ul>
 					</div>
 				</div>

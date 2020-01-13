@@ -17,7 +17,7 @@ function rupiah($angka){
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Bootstrap E-commerce Templates</title>
+		<title>Upload Bukti Transfer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
@@ -54,7 +54,7 @@ function rupiah($angka){
   				<div class="span4">
   					<a href="homepn.php" class="logo pull-left"><img width="200px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
   				</div>
-  				<nav id="menu" class="pull-right">
+          <nav id="menu" class="pull-right">
   						<ul>
                 <li>
                   <a>
@@ -69,20 +69,104 @@ function rupiah($angka){
   							</li>
   							<li>
   							  <a>
-                    <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="3">notifications_none</div>
+                    <?php
+                    $jum = 0;
+                    $ceknotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_penawar = '$id_penawar' and baca = 'belum'");
+                    while ($cekjumnot = mysqli_fetch_array($ceknotif)) {
+                      $jum++;
+                    }
+                    if ($jum==0) { ?>
+                      <div class="material-icons">notifications_none</div>
+                    <?php
+                    }else { ?>
+                      <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<?php echo $jum; ?>">notifications_none</div>
+                    <?php
+                    }
+                     ?>
   							    <div class="caption" >notifikasi</div>
                   </a>
               					<!-- Notifications dropdown-->
               		<ul class="span3">
-  									<li>
-  										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Tuna 60 KG</a>
-  									</li>
-  									<li>
-  										<a href="./products.html"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Anda Kalah Lelang Ikan Tongkol 30 KG</a>
-  									</li>
-  									<li>
-  										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Kerapu 25 KG</a>
-  									</li>
+  									<?php
+                    $querynotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_penawar = '$id_penawar'");
+                    while ($datanotif = mysqli_fetch_array($querynotif)) {
+                      $idnottf = $datanotif['id_transfer'];
+                      $idnottw = $datanotif['id_tawaran'];
+                      $bacanot = $datanotif['baca'];
+                      if ($idnottf!=0) {
+                          $notquerytf = mysqli_query($mysqli, "SELECT * FROM transfer WHERE id_transfer = '$idnottf'");
+                          $notdatatf = mysqli_fetch_array($notquerytf);
+                          $notbuktitrans = $notdatatf['bukti_transfer'];
+                          $notstttrans = $notdatatf['status_transfer'];
+                          $notnominal = $notdatatf['nominal'];
+                          if ($notbuktitrans=="") { ?>
+                            <li>
+                            <a href="uploadbukti.php?id_transfer=<?php echo $idnottf; ?>"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Upload Bukti Topup Rp. <?php echo rupiah($notnominal); ?></a>
+                            </li>
+                          <?php
+                          }elseif ($notstttrans=="gagal") {
+                            if ($bacanot=="belum") { ?>
+                              <li>
+                              <a href="bacanotif.php?id_transfer=<?php echo $idnottf; ?>"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Topup Sebanyak Rp. <?php echo rupiah($notnominal); ?> Gagal</a>
+                              </li>
+                          <?php
+                            }
+                          }elseif ($notstttrans=="konfirm") {
+                            if ($bacanot=="belum") { ?>
+                              <li>
+                              <a href="bacanotif.php?id_transfer=<?php echo $idnottf; ?>"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Topup Sebanyak Rp. <?php echo rupiah($notnominal); ?> Berhasil</a>
+                              </li>
+                          <?php
+                            }
+                          }
+                      }
+                      else {
+                        $notquerytw = mysqli_query($mysqli, "SELECT * FROM tawaran WHERE id_tawaran = '$idnottw'");
+                        $notdatatw = mysqli_fetch_array($notquerytw);
+                        $notjumtw = $notdatatw['jumlah_tawaran'];
+                        $notidikan = $notdatatw['id_ikan'];
+                        $notqueryik = mysqli_query($mysqli, "SELECT * FROM ikan WHERE id_ikan = '$notidikan'");
+                        $notdataik = mysqli_fetch_array($notqueryik);
+                        $jenikan = $notdataik['jenis_ikan'];
+                        $notstatkirim = $notdataik['status_kirim'];
+                        $notquerywin = mysqli_query($mysqli, "SELECT * FROM pemenang WHERE id_tawaran = '$idnottw'");
+                        $notwin = mysqli_fetch_array($notquerywin);
+                        $notidwin = $notwin['id_pemenang'];
+                        if ($bacanot=="belum") {
+                          if ($notidwin=="") { ?>
+                            <li>
+                            <a href="bacanotif.php?id_ikan=<?php echo $notidikan; ?>&id_tawaran=<?php echo $idnottw; ?>">
+                              <img width="25px" height="20px" src="error.png" class="site_logo" alt="">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Dilewati
+                              <br> Saldo Anda Kembali
+                            </a>
+                            </li>
+                          <?php
+                          }else {
+                            if ($notstatkirim=="") { ?>
+                              <li>
+                              <a href="bacanotif.php?id_ikan=<?php echo $notidikan; ?>&id_tawaran=<?php echo $idnottw; ?>">
+                                <img width="25px" height="20px" src="succes.png" class="site_logo" alt="">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Menang
+                                <br> Pelelangan Selesai, Menunggu Dikirim Oleh Pelelang
+                              </a>
+                              </li>
+                            <?php
+                            }elseif ($notstatkirim=="kirim") { ?>
+                              <li>
+                              <a href="infoprodukpn.php?id_ikan=<?php echo $notidikan; ?>">
+                                <img width="25px" height="20px" src="succes.png" class="site_logo" alt="">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Menang
+                                <br> Produk Telah Dikirim...Konfirmasi Penerimaan
+                              </a>
+                              </li>
+                            <?php
+                            }
+                          }
+                        }
+                      }
+                    }
+                     ?>
+                    <li>
+                      <a href="pemberitahuan.php?id_penawar='<?php echo $id_penawar; ?>'">Lihat Semua Pemberitahuan</a>
+                    </li>
   							  </ul>
   							</li>
   							<li>
@@ -118,8 +202,9 @@ function rupiah($angka){
   			</div>
   		</div>
 		<div id="wrapper" class="container">
+    <div class="navbar-inner main-menu center">
+    </div>
 			<section class="header_text sub">
-				<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<h4><span>Check Out</span></h4>
 			</section>
 			<section class="main-content">
@@ -186,35 +271,28 @@ function rupiah($angka){
 				     </div>
 				    </div>
 			   </section>
-			<section id="footer-bar">
-				<div class="row">
-					<div class="span3">
-						<h4>Navigation</h4>
-						<ul class="nav">
-							<li><a href="./index.html">Homepage</a></li>
-
-							<li><a href="./contact.html">Contac Us</a></li>
-							<li><a href="./cart.html">Your Cart</a></li>
-							<li><a href="./register.html">Login</a></li>
-						</ul>
-					</div>
-					<div class="span4">
-						<h4>My Account</h4>
-						<ul class="nav">
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Topup History</a></li>
-						</ul>
-					</div>
-					<div class="span5">
-						<a><img width="115px" height="115px" src="Elang.png" class="site_logo" alt=""></a>
-						<p>Web penyedia pelelangan ikan pertama di indonesia</p>
-						<br/>
-					</div>
-				</div>
-			</section>
-			<section id="copyright">
-				<span>Copyright 2019 E_LANG corporation</span>
-			</section>
+         <section id="footer-bar">
+   				<div class="row">
+   					<div class="span3">
+   						<h4>Navigation</h4>
+   						<ul class="nav">
+   							<li><a href="homepn.php">Homepage</a></li>
+   							<li><a href="pemberitahuan.php">Pemberitahuan</a></li>
+   							<li><a href="logoutpn.php">Logout</a></li>
+   						</ul>
+   					</div>
+   					<div class="span4">
+   						<h4>My Account</h4>
+   						<ul class="nav">
+   							<li><a href="profilpn.php">Profil</a></li>
+   							<li><a href="cart.php">Cart</a></li>
+   						</ul>
+   					</div>
+   				</div>
+   			</section>
+   			<section id="copyright">
+   				<span>Copyright 2019 E-LANG by DECODE.</span>
+   			</section>
 		</div>
 		<script src="themes/js/common.js"></script>
     <script>
