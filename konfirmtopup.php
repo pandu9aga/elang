@@ -7,6 +7,7 @@ if(isset($_GET['id_transfer']))
     $id_transfer = $_GET['id_transfer'];
     $batal = $_GET['batal'];
     $result = mysqli_query($mysqli, "UPDATE transfer SET status_transfer='gagal' WHERE id_transfer='$id_transfer'");
+    $changenot = mysqli_query($mysqli, "UPDATE notif SET baca='belum' WHERE id_transfer='$id_transfer'");
     header("location: topupadmin.php");
   }else {
   $id_transfer = $_GET['id_transfer'];
@@ -21,6 +22,7 @@ if(isset($_GET['id_transfer']))
   $saldo = $datapn['saldo'];
   $plussaldo = $saldo + $nominal;
   $topup = mysqli_query($mysqli, "UPDATE penawar SET saldo='$plussaldo' WHERE id_penawar='$id_penawar'");
+  $changenot = mysqli_query($mysqli, "UPDATE notif SET baca='belum' WHERE id_transfer='$id_transfer'");
   header("location: topupadmin.php");
   }
   }

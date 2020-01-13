@@ -14,7 +14,7 @@ label, input, button, select, textarea{
 }
 ul li a,a{
 	color:#333;
-	outline:0; 
+	outline:0;
 	-webkit-transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;
     -o-transition: all 0.2s linear;
@@ -23,6 +23,26 @@ ul li a,a{
 }
 .coteng{
 	align-self: center;
+}
+.logo-overflw{
+	margin-left: 2%;
+	margin-right:80%;
+	margen-top:1%;
+}
+.overflw{
+	margin-left: 30%;
+	margin-top:1%;
+	padding-bottom: 1%;
+}
+.konkir{
+	font-weight: bold;
+	font: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	font-size: 20px;
+}
+.pricekonkir{
+	font-weight: bold;
+	font: oblique;
+	font-size:15px;
 }
 a{
 	color:#4e4d9b;
@@ -79,9 +99,7 @@ a:hover{
 .avatar{
 	position:absolute;
 	top:25%;
-	padding-left: 100px;
-	
-	
+	padding-left: 100px;	
 }
 .avatar img{
 	width: 180px;
@@ -339,16 +357,16 @@ section.navbar{
 	padding: 10px 14px;
 	}
 #menu > ul > li.active{
-	background-color:#eb4800;
+	background-color:#3A3A84;
 }
 #menu > ul > li.active > a{
 	color:#fff;
 }
 #menu > ul a:hover{
-	color: #eb4800; 
+	color: #3A3A84; 
 	text-decoration:none;
 }
-#menu .current{color: #eb4800 !important;}
+#menu .current{color: #3A3A84 !important;}
 
 #menu ul ul {
     background: none repeat scroll 0 0 #eee;
@@ -380,8 +398,8 @@ section.navbar{
     color: #333;
     font-size: 12px;
 }
-#menu ul ul a:hover,#menu > ul > li:hover > a{color: #fff;background-color:#eb4800}
-#menu ul ul a:hover{background-color:#eb4800;}
+#menu ul ul a:hover,#menu > ul > li:hover > a{color: #fff;background-color:#3A3A84}
+#menu ul ul a:hover{background-color:#3A3A84;}
 #menu > ul > li:hover {visibility: inherit;}
 #menu li:hover {visibility: inherit;}
 #menu li:hover ul,
@@ -547,6 +565,7 @@ section.our_client{
 }
 section.our_client .row{
 	text-align:center;
+	
 }
 /* end our clients */
 .search_form {

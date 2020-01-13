@@ -12,6 +12,7 @@ if(isset($_POST['upload']))
     $show = mysqli_query($mysqli,"SELECT * FROM transfer WHERE id_penawar = '$id_penawar' and waktu = NOW()");
     $data = mysqli_fetch_array($show);
     $id_transfer = $data['id_transfer'];
+    $notif = mysqli_query($mysqli, "INSERT INTO notif (id_transfer,id_penawar) VALUES ('$id_transfer','$id_penawar')");
     header("location: uploadbukti.php?id_transfer=".$id_transfer);
 }
 ?>

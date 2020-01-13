@@ -27,15 +27,28 @@ if(isset($_POST['submittawaran'])) {
           $operation = $saldo - $tawaran;
           $minsaldo = mysqli_query($mysqli, "UPDATE penawar SET saldo='$operation' WHERE id_penawar='$id_penawar'");
           $result = mysqli_query($mysqli, "UPDATE tawaran SET jumlah_tawaran='$tawaran' WHERE id_penawar = '$id_penawar' and id_ikan = '$id_ikan'");
+          $querygetidtw = mysqli_query($mysqli, "SELECT * FROM tawaran WHERE id_penawar = '$id_penawar' and id_ikan = '$id_ikan'");
+          $getidtw = mysqli_fetch_array($querygetidtw);
+          $idselftw = $getidtw['id_tawaran'];
           $lowquery = mysqli_query($mysqli, "SELECT * FROM tawaran WHERE id_ikan='$id_ikan' and jumlah_tawaran='$twmax'");
           while ($datalow=mysqli_fetch_array($lowquery)) {
             $idpn = $datalow['id_penawar'];
+            $idtwmax = $datalow['id_tawaran'];
             $lowtawaran = $datalow['jumlah_tawaran'];
             $querylowpn = mysqli_query($mysqli, "SELECT * FROM penawar WHERE id_penawar='$idpn'");
             while ($datalowpn=mysqli_fetch_array($querylowpn)) {
               $saldolow = $datalowpn['saldo'];
               $saldoback = $saldolow + $lowtawaran;
               $plussaldo = mysqli_query($mysqli, "UPDATE penawar SET saldo='$saldoback' WHERE id_penawar='$idpn'");
+              $querynotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_tawaran='$idtwmax'");
+              $datanotif = mysqli_fetch_array($querynotif);
+              $idtwnot = $datanotif['id_tawaran'];
+              if ($idtwnot=="") {
+                $insertnotif = mysqli_query($mysqli, "INSERT INTO notif (id_penawar,id_tawaran,baca) VALUES('$idpn','$idtwmax','belum')");
+              }else {
+                $updatenotif = mysqli_query($mysqli, "UPDATE notif SET baca='belum' WHERE id_tawaran='$idtwmax'");
+              }
+              $upnotself = mysqli_query($mysqli, "UPDATE notif SET baca='sudah' WHERE id_tawaran='$idselftw'");
             }
           }
         }
@@ -53,6 +66,14 @@ if(isset($_POST['submittawaran'])) {
             $saldolow = $datalowpn['saldo'];
             $saldoback = $saldolow + $lowtawaran;
             $plussaldo = mysqli_query($mysqli, "UPDATE penawar SET saldo='$saldoback' WHERE id_penawar='$idpn'");
+          }
+          $querynotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_tawaran='$idtwmax'");
+          $datanotif = mysqli_fetch_array($querynotif);
+          $idtwnot = $datanotif['id_tawaran'];
+          if ($idtwnot=="") {
+            $insertnotif = mysqli_query($mysqli, "INSERT INTO notif (id_penawar,id_tawaran,baca) VALUES('$idpn','$idtwmax','belum')");
+          }else {
+            $updatenotif = mysqli_query($mysqli, "UPDATE notif SET baca='belum' WHERE id_tawaran='$idtwmax'");
           }
         }
         header("location:infoprodukpn.php?id_ikan=$id_ikan");

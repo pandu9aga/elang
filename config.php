@@ -32,6 +32,11 @@ while($data = mysqli_fetch_array($result))
         $datawin = mysqli_fetch_array($querywin);
         $id_winner = $datawin['id_pemenang'];
         $translelang = mysqli_query($mysqli, "INSERT INTO transfer_pelelang (id_pemenang,status_transpelelang) VALUES ('$id_winner','')");
+        $queryupdatenot = mysqli_query($mysqli, "SELECT * FROM tawaran WHERE id_ikan = '$id_ikan'");
+        while ($datanot=mysqli_fetch_array($queryupdatenot)) {
+          $idtwdatanot = $datanot['id_tawaran'];
+          $updatenotif = mysqli_query($mysqli, "UPDATE notif SET baca='belum' WHERE id_tawaran='$idtwdatanot'");
+        }
       }
     }
 }

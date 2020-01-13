@@ -33,7 +33,6 @@ function rupiah($angka){
 		<link href="themes/css/sucsessbox.css" rel="stylesheet"/>
 		<link href="themes/css/animnotif.css" rel="stylesheet"/>
 		<link href="bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
 		<script src="js/material.min.js"></script>
 		<link href="themes/css/material-icon.css" rel="stylesheet">
@@ -45,8 +44,6 @@ function rupiah($angka){
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="themes/js/superfish.js"></script>
 		<script src="themes/js/jquery.scrolltotop.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!--[if lt IE 9]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 			<script src="js/respond.min.js"></script>
@@ -56,76 +53,156 @@ function rupiah($angka){
 		<div id="top-bar" class="container">
 			<div class="row">
 				<div class="span4">
-					<a href="index.html" class="logo pull-left"><img width="200px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
+					<a href="homepn.php" class="logo pull-left"><img width="200px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
 				</div>
 				<nav id="menu" class="pull-right">
-						<ul><li><a><div class="caption" ><center>CASH</center></div>
-							<span class="mdl-chip mdl-chip--contact">
-                                   <span class="mdl-chip__contact color--orange">RP</span>
-                                   <span class="mdl-chip__text">512.000.000</span>
-                               </span>
-							</a>
+						<ul>
+              <li>
+                <a>
+                  <div class="caption" >
+                    <center>CASH</center>
+                  </div>
+							     <span class="mdl-chip mdl-chip--contact">
+                    <span class="mdl-chip__contact color--orange">RP</span>
+                    <span class="mdl-chip__text"><?php echo rupiah($saldopn); ?></span>
+                  </span>
+							  </a>
 							</li>
 							<li>
-							<a><div class="material-icons mdl-badge mdl-badge--overlap "
-                 				data-badge="3">
-                				notifications_none
-           				 	   </div>
-							<div class="caption" >notifikasi</div></a>
+							  <a>
+                  <?php
+                  $jum = 0;
+                  $ceknotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_penawar = '$id_penawar' and baca = 'belum'");
+                  while ($cekjumnot = mysqli_fetch_array($ceknotif)) {
+                    $jum++;
+                  }
+                  if ($jum==0) { ?>
+                    <div class="material-icons">notifications_none</div>
+                  <?php
+                  }else { ?>
+                    <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<?php echo $jum; ?>">notifications_none</div>
+                  <?php
+                  }
+                   ?>
+							    <div class="caption" >notifikasi</div>
+                </a>
             					<!-- Notifications dropdown-->
-            				<ul class="span3">
-									<li>
-										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Tuna 60 KG</a>
-
-									</li>
-									<li>
-										<a href="./products.html"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Anda Kalah Lelang Ikan Tongkol 30 KG</a>
-
-									</li>
-									<li>
-										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Kerapu 25 KG</a>
-
-									</li>
-							</ul>
+            		<ul class="span3">
+									<?php
+                  $querynotif = mysqli_query($mysqli, "SELECT * FROM notif WHERE id_penawar = '$id_penawar'");
+                  while ($datanotif = mysqli_fetch_array($querynotif)) {
+                    $idnottf = $datanotif['id_transfer'];
+                    $idnottw = $datanotif['id_tawaran'];
+                    $bacanot = $datanotif['baca'];
+                    if ($idnottf!=0) {
+                        $notquerytf = mysqli_query($mysqli, "SELECT * FROM transfer WHERE id_transfer = '$idnottf'");
+                        $notdatatf = mysqli_fetch_array($notquerytf);
+                        $notbuktitrans = $notdatatf['bukti_transfer'];
+                        $notstttrans = $notdatatf['status_transfer'];
+                        $notnominal = $notdatatf['nominal'];
+                        if ($notbuktitrans=="") { ?>
+                          <li>
+                          <a href="uploadbukti.php?id_transfer=<?php echo $idnottf; ?>"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Upload Bukti Topup Rp. <?php echo rupiah($notnominal); ?></a>
+                          </li>
+                        <?php
+                        }elseif ($notstttrans=="gagal") {
+                          if ($bacanot=="belum") { ?>
+                            <li>
+                            <a href="bacanotif.php?id_transfer=<?php echo $idnottf; ?>"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Topup Sebanyak Rp. <?php echo rupiah($notnominal); ?> Gagal</a>
+                            </li>
+                        <?php
+                          }
+                        }elseif ($notstttrans=="konfirm") {
+                          if ($bacanot=="belum") { ?>
+                            <li>
+                            <a href="bacanotif.php?id_transfer=<?php echo $idnottf; ?>"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Topup Sebanyak Rp. <?php echo rupiah($notnominal); ?> Berhasil</a>
+                            </li>
+                        <?php
+                          }
+                        }
+                    }
+                    else {
+                      $notquerytw = mysqli_query($mysqli, "SELECT * FROM tawaran WHERE id_tawaran = '$idnottw'");
+                      $notdatatw = mysqli_fetch_array($notquerytw);
+                      $notjumtw = $notdatatw['jumlah_tawaran'];
+                      $notidikan = $notdatatw['id_ikan'];
+                      $notqueryik = mysqli_query($mysqli, "SELECT * FROM ikan WHERE id_ikan = '$notidikan'");
+                      $notdataik = mysqli_fetch_array($notqueryik);
+                      $jenikan = $notdataik['jenis_ikan'];
+                      $notstatkirim = $notdataik['status_kirim'];
+                      $notquerywin = mysqli_query($mysqli, "SELECT * FROM pemenang WHERE id_tawaran = '$idnottw'");
+                      $notwin = mysqli_fetch_array($notquerywin);
+                      $notidwin = $notwin['id_pemenang'];
+                      if ($bacanot=="belum") {
+                        if ($notidwin=="") { ?>
+                          <li>
+                          <a href="bacanotif.php?id_ikan=<?php echo $notidikan; ?>&id_tawaran=<?php echo $idnottw; ?>">
+                            <img width="25px" height="20px" src="error.png" class="site_logo" alt="">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Dilewati
+                            <br> Saldo Anda Kembali
+                          </a>
+                          </li>
+                        <?php
+                        }else {
+                          if ($notstatkirim=="") { ?>
+                            <li>
+                            <a href="bacanotif.php?id_ikan=<?php echo $notidikan; ?>&id_tawaran=<?php echo $idnottw; ?>">
+                              <img width="25px" height="20px" src="succes.png" class="site_logo" alt="">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Menang
+                              <br> Pelelangan Selesai, Menunggu Dikirim Oleh Pelelang
+                            </a>
+                            </li>
+                          <?php
+                          }elseif ($notstatkirim=="kirim") { ?>
+                            <li>
+                            <a href="infoprodukpn.php?id_ikan=<?php echo $notidikan; ?>">
+                              <img width="25px" height="20px" src="succes.png" class="site_logo" alt="">Tawaran <?php echo $jenikan; ?> Rp. <?php echo rupiah($notjumtw); ?> Menang
+                              <br> Produk Telah Dikirim...Konfirmasi Penerimaan
+                            </a>
+                            </li>
+                          <?php
+                          }
+                        }
+                      }
+                    }
+                  }
+                   ?>
+                  <li>
+                    <a href="#">Lihat Semua Pemberitahuan</a>
+                  </li>
+							  </ul>
 							</li>
 							<li>
-								<a href="./products.html"><i class="material-icons">account_box</i>
-									<div class="caption" >PROFILE</div></a>
+								<a href="profilpn.php"><i class="material-icons">account_box</i>
+									<div class="caption" >PROFILE</div>
+                </a>
 							</li>
 							<li>
-								<a href="./products.html"><i class="material-icons">add_shopping_cart</i>
-									<div class="caption" >CART</div></a>
+								<a href="cart.php"><i class="material-icons">add_shopping_cart</i>
+									<div class="caption" >CART</div>
+                </a>
 							</li>
-							<li><a><i class="material-icons">account_balance_wallet</i>
-								<div class="caption" >TOPUP</div></a>
+							<li>
+                <a><i class="material-icons">account_balance_wallet</i>
+								  <div class="caption" >TOPUP</div>
+                </a>
 								<ul>
 									<li>
-										<a href="./products.html"><img width="27px" height="20px" src="dollar.png" class="site_logo" alt="">Topup</a>
+										<a href="topup.php"><img width="27px" height="20px" src="dollar.png" class="site_logo" alt="">Topup</a>
 									</li>
 									<li>
-										<a href="./products.html"><img width="25px" height="20px" src="clock.png" class="site_logo" alt="">Cart Topup</a>
+										<a href="carttopup.php"><img width="25px" height="20px" src="clock.png" class="site_logo" alt="">Cart Topup</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a href="./products.html"><i class="material-icons">exit_to_app</i>
-									<div class="caption" >LOGOUT</div></a>
+								<a href="logoutpn.php"><i class="material-icons">exit_to_app</i>
+									<div class="caption" >LOGOUT</div>
+                </a>
 							</li>
-
 						</ul>
 					</nav>
 			</div>
 		</div>
 		<div id="wrapper" class="container">
-			<section class="navbar main-menu">
-				<div class="navbar-inner main-menu">
-					<nav id="menu" class="pull-right">
-						<ul>
-							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
-						</ul>
-					</nav>
-				</div>
-			</section>
 			<section class="header_text sub">
 			<img class="pageBanner" src="themes/images/promo.png" alt="New products" >
 				<h4><span>Ikan Segar Untuk Anda</span></h4>
@@ -133,6 +210,13 @@ function rupiah($angka){
 			<section class="main-content">
 				<div class="row">
 					<div class="span9">
+            <?php
+            if (isset($_GET['pesan'])) {
+              $pesan = $_GET['pesan'];
+              if ($pesan=="hapustopup") {
+                echo "Batalkan Top Up berhasil";
+              }
+            } ?>
 						<ul class="thumbnails listing-products">
 							<?php
 						  $halaman = 9;

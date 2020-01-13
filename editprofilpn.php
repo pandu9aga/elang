@@ -62,18 +62,25 @@ function rupiah($angka){
 	<head>
 		<meta charset="utf-8">
 		<title> Edit  Profil Penawar</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
 		<!-- bootstrap -->
 		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-
 		<link href="themes/css/bootstrappage.css" rel="stylesheet"/>
 
 		<!-- global styles -->
 		<link href="themes/css/flexslider.css" rel="stylesheet"/>
 		<link href="themes/css/main.css" rel="stylesheet"/>
+		<link href="themes/css/sucsessbox.css" rel="stylesheet"/>
+		<link href="themes/css/animnotif.css" rel="stylesheet"/>
+		<link href="bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+		<script src="js/material.min.js"></script>
+		<link href="themes/css/material-icon.css" rel="stylesheet">
+		<link rel="stylesheet" href="themes/css/application.min.css">
+
 
 		<!-- scripts -->
 		<script src="themes/js/jquery-1.7.2.min.js"></script>
@@ -86,33 +93,75 @@ function rupiah($angka){
 		<![endif]-->
 	</head>
     <body>
-		<div id="top-bar" class="container">
-			<div class="row">
-				<div class="span4">
-					<a href="homepn.php" class="logo-left"><img width="115px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
-				</div>
-				<div class="span8">
-					<div class="account pull-right">
-						<ul class="user-menu">
-							<li><a href="profilpn.php">Profil</a></li>
-							<li><a href="cart.php">Your Cart</a></li>
-							<li><a href="topup.php">Topup</a></li>
-							<li><a href="logoutpn.php">Logout</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div id="top-bar" class="container">
+  			<div class="row">
+  				<div class="span4">
+  					<a href="homepn.php" class="logo pull-left"><img width="200px" height="115px" src="elanghome.png" class="site_logo" alt=""></a>
+  				</div>
+  				<nav id="menu" class="pull-right">
+  						<ul>
+                <li>
+                  <a>
+                    <div class="caption" >
+                      <center>CASH</center>
+                    </div>
+  							     <span class="mdl-chip mdl-chip--contact">
+                      <span class="mdl-chip__contact color--orange">RP</span>
+                      <span class="mdl-chip__text"><?php echo rupiah($saldopn); ?></span>
+                    </span>
+  							  </a>
+  							</li>
+  							<li>
+  							  <a>
+                    <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="3">notifications_none</div>
+  							    <div class="caption" >notifikasi</div>
+                  </a>
+              					<!-- Notifications dropdown-->
+              		<ul class="span3">
+  									<li>
+  										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Tuna 60 KG</a>
+  									</li>
+  									<li>
+  										<a href="./products.html"><img width="25px" height="20px" src="error.png" class="site_logo" alt="">Anda Kalah Lelang Ikan Tongkol 30 KG</a>
+  									</li>
+  									<li>
+  										<a href="./products.html"><img width="27px" height="20px" src="succes.png" class="site_logo" alt="">Anda Menang Lelang Ikan Kerapu 25 KG</a>
+  									</li>
+  							  </ul>
+  							</li>
+  							<li>
+  								<a href="profilpn.php"><i class="material-icons">account_box</i>
+  									<div class="caption" >PROFILE</div>
+                  </a>
+  							</li>
+  							<li>
+  								<a href="cart.php"><i class="material-icons">add_shopping_cart</i>
+  									<div class="caption" >CART</div>
+                  </a>
+  							</li>
+  							<li>
+                  <a><i class="material-icons">account_balance_wallet</i>
+  								  <div class="caption" >TOPUP</div>
+                  </a>
+  								<ul>
+  									<li>
+  										<a href="topup.php"><img width="27px" height="20px" src="dollar.png" class="site_logo" alt="">Topup</a>
+  									</li>
+  									<li>
+  										<a href="carttopup.php"><img width="25px" height="20px" src="clock.png" class="site_logo" alt="">Cart Topup</a>
+  									</li>
+  								</ul>
+  							</li>
+  							<li>
+  								<a href="logoutpn.php"><i class="material-icons">exit_to_app</i>
+  									<div class="caption" >LOGOUT</div>
+                  </a>
+  							</li>
+  						</ul>
+  					</nav>
+  			</div>
+  		</div>
 		<div id="wrapper" class="container">
-      <section class="navbar main-menu">
-				<div class="navbar-inner main-menu">
-					<nav id="menu" class="pull-right">
-						<ul>
-							<li><a href="topup.php">saldo Anda : Rp. <?php echo rupiah($saldopn); ?></a></li>
-						</ul>
-					</nav>
-				</div>
-			</section>
       <section class="header_text sub">
         <h4>  Edit Profil</h4>
       </section>
