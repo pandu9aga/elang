@@ -217,7 +217,7 @@ function rupiah($angka){
                   <th>Bukti Transfer</th>
 									<th>Waktu Topup</th>
 									<th>Jumlah Topup</th>
-									<th>Status</th>
+									<th><center>Status</center></th>
                   <th></th>
 								</tr>
 							</thead>

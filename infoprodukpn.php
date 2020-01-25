@@ -235,7 +235,7 @@ while($dataikan = mysqli_fetch_array($result))
        }
         ?>
 				<div class="row">
-					<div class="span9">
+					<div class="span12">
 						<div class="row">
 							<div class="span4">
 								<a href="<?php echo $gambar; ?>" class="thumbnail" data-fancybox-group="group1" title="Info Produk"><img alt="" src="<?php echo $gambar; ?>"></a>
@@ -312,7 +312,7 @@ while($dataikan = mysqli_fetch_array($result))
                ?>
 						</div>
 						<div class="row">
-							<div class="span9">
+							<div class="span12">
 								<ul class="nav nav-tabs" id="myTab">
 									<li class="active"><a href="#home">Deskripsi</a></li>
 									<li class=""><a href="#profile">Info Lainnya</a></li>
@@ -357,7 +357,7 @@ while($dataikan = mysqli_fetch_array($result))
 									</div>
 								</div>
 							</div>
-							<div class="span9">
+							<div class="span12">
 								<br>
 								<h4 class="title">
 									<span class="pull-left"><span class="text"><strong>Info</strong> Produk</span></span>

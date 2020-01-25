@@ -231,7 +231,7 @@ function rupiah($angka){
   									<th><h5>Tawaran Anda</h5></th>
   									<th><h5>Tawaran Tertinggi</h5></th>
                     <th><h5>Batas Waktu</h5></th>
-                    <th><h5>Status</h5></th>
+                    <th><center><h5>Status</h5></center></th>
   								</tr>
                   <tr>
   									<td><a href="infoprodukpn.php?id_ikan=<?php echo $data['id_ikan'];?>"><img alt="" width="108px" height="63" src="<?php echo $data['gambar_ikan']; ?>"></a></td>
@@ -251,23 +251,23 @@ function rupiah($angka){
                     <td><?php echo $waktulelang; ?></td>
                     <?php
                     if ($data['status_lelang']=='berlangsung') { ?>
-                      <td>Berlangsung</td>
+                      <td><div class='info-msg'>Berlangsung</td>
                     <?php
                     } else {
                       if ($data['jumlah_tawaran']==$tawaran_tertinggi) {
                         if ($data['status_kirim']=='kirim') { ?>
-                          <td>Win!! Produk sedang dikirim<a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Telah diterima</button></a></td>
+                          <td><div class='info-msg'><br/>Win!! Produk sedang dikirim<a href="kirim.php?terima=terima&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmterima">Telah diterima</button></a></td>
                         <?php
                         } elseif ($data['status_kirim']=='terima') { ?>
-                          <td>Win!! Pelelangan Selesai</td>
+                          <td><div class='success-msg'>Win!! Pelelangan Selesai</td>
                         <?php
                         } else { ?>
-                        <td>Win!! Tunggu pelelang mengirim produknya</td>
+                        <td><div class='warning-msg'>Win!! Tunggu pelelang mengirim produknya</td>
                         <?php
                         }?>
                       <?php
                       } else { ?>
-                        <td>Maaf anda kalah pelelangan</td>
+                        <td><div class='error-msg'>Maaf anda kalah pelelangan</td>
                         <?php
                       }
                     }

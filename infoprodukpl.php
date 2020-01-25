@@ -38,6 +38,7 @@ function rupiah($angka){
 		<!-- global styles -->
 		<link href="themes/css/main.css" rel="stylesheet"/>
 		<link href="themes/css/jquery.fancybox.css" rel="stylesheet"/>
+		<link href="themes/css/flexslider.css" rel="stylesheet"/>
 
 		<!-- scripts -->
 		<script src="themes/js/jquery-1.7.2.min.js"></script>
@@ -124,7 +125,7 @@ function rupiah($angka){
                         <a  data-toggle="modal" data-target="#buktitransfer">
                           <img src="<?php echo $buktiimg; ?>" alt="" width="112" height="77">
                         </a><br>
-                        <p>Konfirmasi transfer telah diterima : <a href="stattrans.php?idtranspl=<?php echo $idtranspl; ?>&id_ikan=<?php echo $id_ikan; ?>"><button type="button" name="konfirmtrans">Konfirmasi</button></a></p>
+                        <p>Konfirmasi transfer telah diterima : <a href="stattrans.php?idtranspl=<?php echo $idtranspl; ?>&id_ikan=<?php echo $id_ikan; ?>"><button class="btn btn-inverse" type="button"  name="konfirmtrans">Konfirmasi</button></a></p>
                       <?php
                       } elseif ($stattrans=='konfirm') { ?>
                         <br><br>

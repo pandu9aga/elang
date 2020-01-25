@@ -210,7 +210,7 @@ function rupiah($angka){
 			<section class="main-content">
 
 				<div class="row">
-					<div class="span9">
+					<div class="span12">
 					  <div class="coteng">
 						<ul class="thumbnails listing-products">
 							<li class="span3">
@@ -283,15 +283,6 @@ function rupiah($angka){
 									<br/>
 									<p class="price">Rp. 500.000</p>
 									<a href="checkouttopup.php?nominal=500000" class="category">Bayar 500.000</a>
-								</div>
-							</li>
-							<li class="span3">
-								<div class="product-box">
-									<span class="sale_tag"></span>
-									<a href="checkouttopup.php?nominal=1000000"><img alt="" height="200px" width="135px" src="cash.png"></a><br/>
-									<br/>
-									<p class="price">Rp. 1.000.000</p>
-									<a href="checkouttopup.php?nominal=1000000" class="category">Bayar 1.000.000</a>
 								</div>
 							</li>
 						</ul>

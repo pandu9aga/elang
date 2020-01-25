@@ -57,7 +57,7 @@ $id_pelelang = $_SESSION['id_pelelang'];
 				</div>
 		    </section>
 			<section class="main-content">
-				<a href="lelangselesai.php"><button type="button" name="button">Pelelangan Selesai</button></a>
+				<a href="lelangselesai.php"><button class="btn btn-inverse" type="submit">Pelelangan Selesai</button></a>
         <?php
 				if (isset($_GET['hapus'])) {
 					echo "Hapus Produk Berhasil";

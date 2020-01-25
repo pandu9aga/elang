@@ -46,7 +46,6 @@ function rupiah($angka){
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="topupadmin.php">
         <div class="sidebar-brand-icon rotate-n-15">
-          <img width="45px" height="45px" src="elang.png" alt="">
         </div>
         <div class="sidebar-brand-text mx-3">Elang <sup>Admin</sup></div>
       </a>
@@ -80,12 +79,13 @@ function rupiah($angka){
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
+		
       <!-- Main Content -->
       <div id="content">
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+			<img width="200px" height="60px" src="elanghome.png" class="site_logo" alt="">
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <!-- Nav Item - User Information -->
