@@ -1,44 +1,6 @@
 <?php
 session_start();
 include "config.php";
-if(isset($_POST['update']))
-{
-    $id_pelelang = $_POST['id_pelelang'];
-    $namapl = $_POST['namapl'];
-    $alamatpl = $_POST['alamatpl'];
-    $norekpl = $_POST['norekpl'];
-    $notelppl = $_POST['notelppl'];
-    $emailpl = $_POST['emailpl'];
-    $passpl = $_POST['passpl'];
-    $cttpl = $_POST['cttpl'];
-    $result = mysqli_query($mysqli, "UPDATE pelelang SET nama_pelelang='$namapl',alamat_pelelang='$alamatpl',rek_pelelang='$norekpl',notelp_pelelang='$notelppl',email_pelelang='$emailpl',password_pelelang='$passpl',catatan_pelelang='$cttpl' WHERE id_pelelang=$id_pelelang");
-    header("location: profilpl.php");
-}
-if(isset($_POST['updatepppl'])) {
-    $id_pelelang = $_POST['id_pelelang'];
-    $folder = "pppl/";
-    $upload_image = $_FILES['gambarpl']['name'];
-    $width_size = 480;
-    $height_size = 480;
-    $filesave = $folder . $upload_image;
-    move_uploaded_file($_FILES['gambarpl']['tmp_name'], $filesave);
-    $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
-    list( $width, $height ) = getimagesize($filesave);
-    $w = $width / $width_size;
-    $h = $height / $height_size;
-    $newwidth = $width / $w;
-    $newheight = $height / $h;
-    $thumb = imagecreatetruecolor($newwidth, $newheight);
-    $source = imagecreatefromjpeg($filesave);
-    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    imagejpeg($thumb, $resize_image);
-    imagedestroy($thumb);
-    imagedestroy($source);
-    imagedestroy($filesave);
-    imagedestroy($upload_image);
-    $result = mysqli_query($mysqli, "UPDATE pelelang SET pp_pelelang='$resize_image' WHERE id_pelelang=$id_pelelang");
-    header("location:profilpl.php");
-}
 $id_pelelang = $_SESSION['id_pelelang'];
 $sql = "SELECT * FROM pelelang WHERE id_pelelang = '$id_pelelang'";
 $result = mysqli_query($mysqli, $sql);
@@ -52,6 +14,92 @@ while($datapl = mysqli_fetch_array($result))
     $passpl = $datapl['password_pelelang'];
     $pppl = $datapl['pp_pelelang'];
     $cttpl = $datapl['catatan_pelelang'];
+}
+if(isset($_POST['update']))
+{
+    $uid_pelelang = $_POST['id_pelelang'];
+    $unamapl = $_POST['namapl'];
+    $ualamatpl = $_POST['alamatpl'];
+    $unorekpl = $_POST['norekpl'];
+    $unotelppl = $_POST['notelppl'];
+    $uemailpl = $_POST['emailpl'];
+    $upasspl = $_POST['passpl'];
+    $ucttpl = $_POST['cttpl'];
+    $ceknama = mysqli_query($mysqli, "SELECT * FROM pelelang WHERE nama_pelelang='$unamapl'");
+    $hasilnama = mysqli_fetch_array($ceknama);
+    if ($hasilnama['id_pelelang']>0) {
+      if ($hasilnama['nama_pelelang']==$namapl) {
+        $cekemail = mysqli_query($mysqli, "SELECT * FROM pelelang WHERE email_pelelang='$uemailpl'");
+        $hasilemail = mysqli_fetch_array($cekemail);
+        if ($hasilemail['id_pelelang']>0) {
+          if ($hasilemail['email_pelelang']==$emailpl) {
+            $result = mysqli_query($mysqli, "UPDATE pelelang SET nama_pelelang='$unamapl',alamat_pelelang='$ualamatpl',rek_pelelang='$unorekpl',notelp_pelelang='$unotelppl',email_pelelang='$uemailpl',password_pelelang='$upasspl',catatan_pelelang='$ucttpl' WHERE id_pelelang=$uid_pelelang");
+            header("location: profilpl.php");
+          }else {
+            header("location: editprofilpl.php?sudah=email");
+          }
+        }else {
+          $result = mysqli_query($mysqli, "UPDATE pelelang SET nama_pelelang='$unamapl',alamat_pelelang='$ualamatpl',rek_pelelang='$unorekpl',notelp_pelelang='$unotelppl',email_pelelang='$uemailpl',password_pelelang='$upasspl',catatan_pelelang='$ucttpl' WHERE id_pelelang=$uid_pelelang");
+          header("location: profilpl.php");
+        }
+      }else {
+        header("location: editprofilpl.php?sudah=nama");
+      }
+    }else {
+      $cekemail = mysqli_query($mysqli, "SELECT * FROM pelelang WHERE email_pelelang='$uemailpl'");
+      $hasilemail = mysqli_fetch_array($cekemail);
+      if ($hasilemail['id_pelelang']>0) {
+        if ($hasilemail['email_pelelang']==$emailpl) {
+          $result = mysqli_query($mysqli, "UPDATE pelelang SET nama_pelelang='$unamapl',alamat_pelelang='$ualamatpl',rek_pelelang='$unorekpl',notelp_pelelang='$unotelppl',email_pelelang='$uemailpl',password_pelelang='$upasspl',catatan_pelelang='$ucttpl' WHERE id_pelelang=$uid_pelelang");
+          header("location: profilpl.php");
+        }else {
+          header("location: editprofilpl.php?sudah=email");
+        }
+      }else {
+        $result = mysqli_query($mysqli, "UPDATE pelelang SET nama_pelelang='$unamapl',alamat_pelelang='$ualamatpl',rek_pelelang='$unorekpl',notelp_pelelang='$unotelppl',email_pelelang='$uemailpl',password_pelelang='$upasspl',catatan_pelelang='$ucttpl' WHERE id_pelelang=$uid_pelelang");
+        header("location: profilpl.php");
+      }
+    }
+}
+if(isset($_POST['updatepppl'])) {
+    $uid_pelelang = $_POST['id_pelelang'];
+    $folder = "pppl/";
+    $upload_image = $_FILES['gambarpl']['name'];
+    $jenis_gambar = $_FILES['gambarpl']['type'];
+    $ukuran_gambar = $_FILES['gambarpl']['size'];
+    $maks_ukuran = 10000000;
+    if ($jenis_gambar=="image/jpeg" || $jenis_gambar=="image/jpg") {
+      if ($ukuran_gambar <= $maks_ukuran) {
+        $width_size = 480;
+        $height_size = 480;
+        $filesave = $folder . $upload_image;
+        move_uploaded_file($_FILES['gambarpl']['tmp_name'], $filesave);
+        if ($jenis_gambar=="image/jpeg") {
+          $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpeg";
+        }else {
+          $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
+        }
+        list( $width, $height ) = getimagesize($filesave);
+        $w = $width / $width_size;
+        $h = $height / $height_size;
+        $newwidth = $width / $w;
+        $newheight = $height / $h;
+        $thumb = imagecreatetruecolor($newwidth, $newheight);
+        $source = imagecreatefromjpeg($filesave);
+        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        imagejpeg($thumb, $resize_image);
+        imagedestroy($thumb);
+        imagedestroy($source);
+        imagedestroy($filesave);
+        imagedestroy($upload_image);
+        $result = mysqli_query($mysqli, "UPDATE pelelang SET pp_pelelang='$resize_image' WHERE id_pelelang=$uid_pelelang");
+        header("location:profilpl.php");
+      }else {
+        header("location:editprofilpl.php?ukuran=lebih");
+      }
+    }else {
+      header("location:editprofilpl.php?tipe=salah");
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -115,26 +163,43 @@ while($datapl = mysqli_fetch_array($result))
 											<h9> Upload Foto Profil</h9><br>
     										<input class="buttonprof" type="file" name="gambarpl"><br><br>
                         <input type="hidden" name="id_pelelang" value="<?php echo $id_pelelang; ?>">
-                        <input type="submit" name="updatepppl" value="Upload">
+                        <input type="submit" name="updatepppl" value="Upload"><br><br>
+                        <?php
+                        if (isset($_GET['ukuran'])) {
+                          echo "---Ukuran gambar tidak boleh lebih dari 10 MB!!---";
+                        }
+                        if (isset($_GET['tipe'])) {
+                          echo "---Tipe gambar harus jpg & jpeg!!---";
+                        }
+                         ?>
 										</div>
   									</form>
 								</div>
 							</div>
 							<div class="span5">
+                <?php
+                if (isset($_GET['sudah'])) {
+                  if ($_GET['sudah']=="nama") {
+                    echo "Nama Pelelang Sudah Ada";
+                  }else {
+                    echo "Email Pelelang Sudah Ada";
+                  }
+                }
+                 ?>
                 <form name="update_pl" method="post" action="editprofilpl.php">
 								<address>
 									<h4><strong>Nama Pelelang:</strong></h4>
-									<input type="text" class="span5" name="namapl" value="<?php echo $namapl; ?>">
+									<input type="text" class="span5" name="namapl" value="<?php echo $namapl; ?>" required oninvalid="this.setCustomValidity('nama tidak boleh kosong')" oninput="setCustomValidity('')">
 									<h4><strong>Alamat:</strong></h4>
-									<input type="text" class="span8" name="alamatpl" value="<?php echo $alamatpl; ?>">
+									<input type="text" class="span8" name="alamatpl" value="<?php echo $alamatpl; ?>" required oninvalid="this.setCustomValidity('alamat tidak boleh kosong')" oninput="setCustomValidity('')">
 									<h4><strong>Nomor Rekening:</strong></h4>
-									<input type="text" class="span8" name="norekpl" value="<?php echo $norekpl; ?>">
+									<input type="number" class="span8" name="norekpl" value="<?php echo $norekpl; ?>" required oninvalid="this.setCustomValidity('harus diisi dalam bentuk nomor')" oninput="setCustomValidity('')">
                   <h4><strong>Nomor Telepon:</strong></h4>
-									<input type="text" class="span8" name="notelppl" value="<?php echo $notelppl; ?>">
+									<input type="number" class="span8" name="notelppl" value="<?php echo $notelppl; ?>" required oninvalid="this.setCustomValidity('harus diisi dalam bentuk nomor')" oninput="setCustomValidity('')">
                   <h4><strong>Email:</strong></h4>
-									<input type="text" class="span8" name="emailpl" value="<?php echo $emailpl; ?>">
+									<input type="email" class="span8" name="emailpl" value="<?php echo $emailpl; ?>" required oninvalid="this.setCustomValidity('harus diisi dalam bentuk email')" oninput="setCustomValidity('')">
                   <h4><strong>Password:</strong></h4>
-									<input type="text" class="span8" name="passpl" value="<?php echo $passpl; ?>">
+									<input type="text" class="span8" name="passpl" value="<?php echo $passpl; ?>" required oninvalid="this.setCustomValidity('password tidak boleh kosong')" oninput="setCustomValidity('')">
 								</address>
 								<h4><strong>catatan: </strong></h4>
 								<input type="text" class="span8" name="cttpl" value="<?php echo $cttpl; ?>">

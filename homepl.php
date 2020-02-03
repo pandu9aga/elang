@@ -2,6 +2,10 @@
 session_start();
 include "config.php";
 $id_pelelang = $_SESSION['id_pelelang'];
+function rupiah($angka){
+	$hasil_rupiah = number_format($angka,0,',','.');
+	return $hasil_rupiah;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,20 +75,17 @@ $id_pelelang = $_SESSION['id_pelelang'];
 				<div class="row">
 					<div class="span9">
 					  <div class="coteng">
-						<ul class="thumbnails listing-products">
               <?php
-							function rupiah($angka){
-								$hasil_rupiah = number_format($angka,0,',','.');
-								return $hasil_rupiah;
-							}
-						  $halaman = 6;
-						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
-						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
-						  $result = mysqli_query($mysqli,"SELECT * FROM ikan WHERE id_pelelang = '$id_pelelang'");
-						  $total = mysqli_num_rows($result);
-						  $pages = ceil($total/$halaman);
-              if (isset($_GET['jenis'])) {
+              if (isset($_GET['jenis'])) { ?>
+								<ul class="thumbnails listing-products">
+								<?php
                 $getjenis = $_GET['jenis'];
+								$halaman = 6;
+							  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+							  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+							  $result = mysqli_query($mysqli,"SELECT * FROM ikan WHERE id_pelelang = '$id_pelelang' and jenis_ikan = '$getjenis'");
+							  $total = mysqli_num_rows($result);
+							  $pages = ceil($total/$halaman);
                 $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE id_pelelang = '$id_pelelang' and jenis_ikan = '$getjenis' LIMIT $mulai, $halaman")or die(mysql_error);
   						  $no =$mulai+1;
   						  while ($data = mysqli_fetch_assoc($query)) {
@@ -115,13 +116,21 @@ $id_pelelang = $_SESSION['id_pelelang'];
   							<ul>
   								<li>
   								  <?php for ($i=1; $i<=$pages ; $i++){ ?>
-  								  <a href="?halaman=<?php echo $i;?>"><?php echo $i; ?></a>
+  								  <a href="?halaman=<?php echo $i;?>&jenis=<?php echo $getjenis; ?>"><?php echo $i; ?></a>
   								  <?php } ?>
   								</li>
   							</ul>
   						</div>
               <?php
-            }else {
+            }else { ?>
+							<ul class="thumbnails listing-products">
+							<?php
+						  $halaman = 6;
+						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+						  $result = mysqli_query($mysqli,"SELECT * FROM ikan WHERE id_pelelang = '$id_pelelang'");
+						  $total = mysqli_num_rows($result);
+						  $pages = ceil($total/$halaman);
               $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE id_pelelang = '$id_pelelang' LIMIT $mulai, $halaman")or die(mysql_error);
 						  $no =$mulai+1;
 						  while ($data = mysqli_fetch_assoc($query)) {

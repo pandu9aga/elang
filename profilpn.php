@@ -227,7 +227,7 @@ function rupiah($angka){
 									<h4><strong>Nomor Rekening:</strong></h4> <span><?php echo $norekpn; ?></span><br>
                   <h4><strong>Nomor Telepon:</strong></h4> <span><?php echo $notelppn; ?></span><br>
                   <h4><strong>Email:</strong></h4> <span><?php echo $emailpn; ?></span><br>
-                  <h4><strong>Password:</h4> <span><input type="text" readonly placeholder="<?php echo $passpn; ?>"></span><br>
+                  <h4><strong>Password:</h4> <span><input type="password" readonly placeholder="<?php echo $passpn; ?>"></span><br>
 								</address>
                 <a href="editprofilpn.php"><button class="btn btn-inverse">Edit Profil</button></a>
 							</div>

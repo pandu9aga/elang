@@ -246,7 +246,7 @@ function rupiah($angka){
 														<div class="control-group">
 															<label class="control-label">Nama Kepemilikan Rekening</label>
 															<div class="controls">
-																<input type="text" placeholder="Masukan nama rekening anda" id="username" name="nama_rek" class="input-xlarge">
+																<input type="text" placeholder="Masukan nama rekening anda" id="username" name="nama_rek" class="input-xlarge" required oninvalid="this.setCustomValidity('nama pemilik rekening tidak boleh kosong')" oninput="setCustomValidity('')">
 															</div>
 														</div>
 														<div class="control-group">

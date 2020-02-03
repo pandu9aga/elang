@@ -32,28 +32,26 @@ function rupiah($angka){
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-</head>
-
-<body id="page-top">
-
+  <script src="js/material.min.js"></script>
+  <link href="themes/css/material-icon.css" rel="stylesheet">
+  <link rel="stylesheet" href="themes/css/application.min.css">
+  <link rel="stylesheet" href="css/lib/getmdl-select.min.css">
+  <link rel="stylesheet" href="css/lib/nv.d3.min.css">
+  </head>
+  <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
-
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="topupadmin.php">
         <div class="sidebar-brand-icon rotate-n-15">
-          <img width="45px" height="45px" src="elang.png" alt="">
-        </div>
-        <div class="sidebar-brand-text mx-3">Elang <sup>Admin</sup></div>
-      </a>
 
+        </div>
+        <div class="sidebar-brand-text mx-3">Elang<sup>Admin</sup></div>
+      </a>
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
         <a class="nav-link" href="topupadmin.php">
@@ -66,26 +64,26 @@ function rupiah($angka){
           <i class="fas fa-fw fa-table"></i>
           <span>Transfer Pelelang</span></a>
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link" href="plusjenadm.php">
+          <i class="fas fa-fw fa-fish"></i>
+          <span>Tambah Jenis Ikan</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
-
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-
     </ul>
     <!-- End of Sidebar -->
-
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
       <!-- Main Content -->
       <div id="content">
-
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <img width="200px" height="60px" src="elanghome.png" class="site_logo" alt="">
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <!-- Nav Item - User Information -->

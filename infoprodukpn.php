@@ -275,7 +275,7 @@ while($dataikan = mysqli_fetch_array($result))
     								<form class="form-inline" method="post" action="tawaran.php">
     									<p>&nbsp;</p>
     									<label>Masukkan Tawaran : Rp.</label>
-    									<input type="number" min="<?php echo $mintawaran; ?>"class="span2" name="tawaran" placeholder="masukan harga">
+    									<input type="number" min="<?php echo $mintawaran; ?>"class="span2" name="tawaran" placeholder="masukan harga" required oninvalid="this.setCustomValidity('tawaran harus lebih tinggi dari <?php echo $tawaran_tertinggi; ?>')">
                       <input type="hidden" name="penawar" value="<?php echo $id_penawar; ?>">
                       <input type="hidden" name="ikan" value="<?php echo $id_ikan; ?>">
     									<button class="btn btn-inverse" type="submit" name="submittawaran">+</button>

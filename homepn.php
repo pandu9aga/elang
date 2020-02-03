@@ -218,19 +218,17 @@ function rupiah($angka){
               if ($pesan=="hapustopup") {
                 echo "Batalkan Top Up berhasil";
               }
-            } ?>
-						<ul class="thumbnails listing-products">
-							<?php
-						  $halaman = 9;
-						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
-						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
-						  $result = mysqli_query($mysqli,"SELECT * FROM ikan");
-						  $total = mysqli_num_rows($result);
-						  $pages = ceil($total/$halaman);
-						  $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
-						  $no =$mulai+1;
-							if (isset($_GET['jenis'])) {
+            }
+							if (isset($_GET['jenis'])) { ?>
+                <ul class="thumbnails listing-products">
+                <?php
 								$getjenis = $_GET['jenis'];
+                $halaman = 9;
+                $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+                $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+                $result = mysqli_query($mysqli,"SELECT * FROM ikan WHERE jenis_ikan = '$getjenis' and status_lelang = 'berlangsung'");
+                $total = mysqli_num_rows($result);
+                $pages = ceil($total/$halaman);
                 $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE jenis_ikan = '$getjenis' and status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
   						  $no =$mulai+1;
   						  while ($data = mysqli_fetch_assoc($query)) {
@@ -259,13 +257,23 @@ function rupiah($angka){
   							<ul>
   								<li>
   								  <?php for ($i=1; $i<=$pages ; $i++){ ?>
-  								  <a href="?halaman=<?php echo $i;?>"><?php echo $i; ?></a>
+  								  <a href="?halaman=<?php echo $i;?>&jenis=<?php echo $getjenis; ?>"><?php echo $i; ?></a>
   								  <?php } ?>
   								</li>
   							</ul>
   						</div>
               <?php
-						} else {
+						} else { ?>
+  						<ul class="thumbnails listing-products">
+              <?php
+              $halaman = 9;
+						  $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+						  $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+						  $result = mysqli_query($mysqli,"SELECT * FROM ikan WHERE status_lelang = 'berlangsung'");
+						  $total = mysqli_num_rows($result);
+						  $pages = ceil($total/$halaman);
+						  $query = mysqli_query($mysqli,"SELECT * FROM ikan WHERE status_lelang = 'berlangsung' LIMIT $mulai, $halaman")or die(mysql_error);
+						  $no =$mulai+1;
 							while ($data = mysqli_fetch_assoc($query)) {
 						    ?>
 								<li class="span3">
@@ -306,7 +314,7 @@ function rupiah($angka){
 								<li class="nav-header">JENIS IKAN</li>
                 <li><a href="homepn.php">Semua Jenis</a></li>
                 <?php
-                $queryjenis = mysqli_query($mysqli,"SELECT * FROM ikan group by jenis_ikan");
+                $queryjenis = mysqli_query($mysqli,"SELECT * FROM ikan WHERE status_lelang = 'berlangsung' group by jenis_ikan");
   						  while ($jenis = mysqli_fetch_assoc($queryjenis)) {
                   echo '<li><a href="homepn.php?jenis='.$jenis['jenis_ikan'].'">'.$jenis['jenis_ikan'].'</a></li>';
                 }

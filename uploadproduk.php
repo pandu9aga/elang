@@ -11,26 +11,41 @@ if(isset($_POST['submitproduk'])) {
     $status = $_POST['status'];
     $folder = "ikan/";
     $upload_image = $_FILES['gambar']['name'];
-    $width_size = 480;
-    $height_size = 280;
-    $filesave = $folder . $upload_image;
-    move_uploaded_file($_FILES['gambar']['tmp_name'], $filesave);
-    $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
-    list( $width, $height ) = getimagesize($filesave);
-    $w = $width / $width_size;
-    $h = $height / $height_size;
-    $newwidth = $width / $w;
-    $newheight = $height / $h;
-    $thumb = imagecreatetruecolor($newwidth, $newheight);
-    $source = imagecreatefromjpeg($filesave);
-    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    imagejpeg($thumb, $resize_image);
-    imagedestroy($thumb);
-    imagedestroy($source);
-    imagedestroy($filesave);
-    imagedestroy($upload_image);
-    $result = mysqli_query($mysqli, "INSERT INTO ikan (jenis_ikan,ukuran,waktu_lelang,harga_ikan,spesifikasi,id_pelelang,status_lelang,gambar_ikan,status_kirim) VALUES('$jenis','$berat','$waktu','$hargaawal','$deskripsi','$idpl','$status','$resize_image','')");
-    header("location:homepl.php");
+    $jenis_gambar = $_FILES['gambar']['type'];
+    $ukuran_gambar = $_FILES['gambar']['size'];
+    $maks_ukuran = 10000000;
+    if ($jenis_gambar=="image/jpeg" || $jenis_gambar=="image/jpg") {
+      if ($ukuran_gambar <= $maks_ukuran) {
+        $width_size = 480;
+        $height_size = 280;
+        $filesave = $folder . $upload_image;
+        move_uploaded_file($_FILES['gambar']['tmp_name'], $filesave);
+        if ($jenis_gambar=="image/jpeg") {
+          $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpeg";
+        }else {
+          $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
+        }
+        list( $width, $height ) = getimagesize($filesave);
+        $w = $width / $width_size;
+        $h = $height / $height_size;
+        $newwidth = $width / $w;
+        $newheight = $height / $h;
+        $thumb = imagecreatetruecolor($newwidth, $newheight);
+        $source = imagecreatefromjpeg($filesave);
+        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        imagejpeg($thumb, $resize_image);
+        imagedestroy($thumb);
+        imagedestroy($source);
+        imagedestroy($filesave);
+        imagedestroy($upload_image);
+        $result = mysqli_query($mysqli, "INSERT INTO ikan (jenis_ikan,ukuran,waktu_lelang,harga_ikan,spesifikasi,id_pelelang,status_lelang,gambar_ikan,status_kirim) VALUES('$jenis','$berat','$waktu','$hargaawal','$deskripsi','$idpl','$status','$resize_image','')");
+        header("location:homepl.php");
+      }else {
+        header("location:uploadproduk.php?ukuran=lebih");
+      }
+    }else {
+      header("location:uploadproduk.php?tipe=salah");
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -94,8 +109,16 @@ if(isset($_POST['submitproduk'])) {
 						<div class="row">
 							<div class="span4">
 								<form method="post" name="form_uploadproduk" action="uploadproduk.php" enctype="multipart/form-data">
+                  <?php
+                  if (isset($_GET['ukuran'])) {
+                    echo "---Ukuran gambar tidak boleh lebih dari 10 MB!!---";
+                  }
+                  if (isset($_GET['tipe'])) {
+                    echo "---Tipe gambar harus jpg & jpeg!!---";
+                  }
+                   ?>
                   <label>Masukkan Foto</label>
-                  <input class="btn btn-inverse" type="file" name="gambar">
+                  <input class="btn btn-inverse" type="file" name="gambar" required oninvalid="this.setCustomValidity('gambar ikan tidak boleh kosong dan merupakan jenis file jpg, jpeg, & png')" oninput="setCustomValidity('')">
   								<label>Masukan Jenis Ikan</label>
                     <select name="jenis_ikan">
                       <?php
@@ -106,10 +129,10 @@ if(isset($_POST['submitproduk'])) {
                 			?>
                     </select>
                   <label>Masukan Berat Ikan (kg)</label>
-  								<input type="number" class="span4" name="berat" placeholder="Masukan Berat Ikan">
-  								<label>Masukan Waktu Habis Lelang</label>
+  								<input type="number" class="span4" name="berat" placeholder="Masukan Berat Ikan" required oninvalid="this.setCustomValidity('berat ikan tidak boleh kosong, harus angka')" oninput="setCustomValidity('')">
+  								<label>Masukan Waktu Selesai Lelang</label>
                   <div id="datetimepicker" class="input-append date">
-                    <input type="text" name="waktu"></input>
+                    <input type="text" name="waktu" required oninvalid="this.setCustomValidity('waktu selesai tidak boleh kosong')" oninput="setCustomValidity('')"></input>
                     <span class="add-on">
                       <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
                     </span>
@@ -134,9 +157,9 @@ if(isset($_POST['submitproduk'])) {
                   </script>
   								<label>Masukan Harga Awal</label>
                   Rp.
-  								<input type="number" class="span4" name="harga_awal" placeholder="Masukan Harga awal">
+  								<input type="number" class="span4" name="harga_awal" placeholder="Masukan Harga awal" required oninvalid="this.setCustomValidity('harga awal tidak boleh kosong, harus angka')" oninput="setCustomValidity('')">
   								<label>Masukan Deskripsi Ikan</label>
-  								<input type="text" class="span9" name="deskripsi" placeholder="Masukan Deskripsi">
+  								<input type="text" class="span9" name="deskripsi" placeholder="Masukan Deskripsi" required oninvalid="this.setCustomValidity('deskripsi tidak boleh kosong')" oninput="setCustomValidity('')">
                   <?php
                   $id_pelelang = $_SESSION['id_pelelang'];
                   ?>

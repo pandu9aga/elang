@@ -1,43 +1,6 @@
 <?php
 session_start();
 include "config.php";
-if(isset($_POST['update']))
-{
-    $id_penawar = $_POST['id_penawar'];
-    $namapn = $_POST['namapn'];
-    $alamatpn = $_POST['alamatpn'];
-    $norekpn = $_POST['norekpn'];
-    $notelppn = $_POST['notelppn'];
-    $emailpn = $_POST['emailpn'];
-    $passpn = $_POST['passpn'];
-    $result = mysqli_query($mysqli, "UPDATE penawar SET nama_penawar='$namapn',alamat_penawar='$alamatpn',rek_penawar='$norekpn',notelp_penawar='$notelppn',email_penawar='$emailpn',password_penawar='$passpn' WHERE id_penawar=$id_penawar");
-    header("location: profilpn.php");
-}
-if(isset($_POST['updatepppn'])) {
-    $id_penawar = $_POST['id_penawar'];
-    $folder = "pppn/";
-    $upload_image = $_FILES['gambarpn']['name'];
-    $width_size = 480;
-    $height_size = 480;
-    $filesave = $folder . $upload_image;
-    move_uploaded_file($_FILES['gambarpn']['tmp_name'], $filesave);
-    $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
-    list( $width, $height ) = getimagesize($filesave);
-    $w = $width / $width_size;
-    $h = $height / $height_size;
-    $newwidth = $width / $w;
-    $newheight = $height / $h;
-    $thumb = imagecreatetruecolor($newwidth, $newheight);
-    $source = imagecreatefromjpeg($filesave);
-    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    imagejpeg($thumb, $resize_image);
-    imagedestroy($thumb);
-    imagedestroy($source);
-    imagedestroy($filesave);
-    imagedestroy($upload_image);
-    $result = mysqli_query($mysqli, "UPDATE penawar SET pp_penawar='$resize_image' WHERE id_penawar=$id_penawar");
-    header("location:profilpn.php");
-}
 $id_penawar = $_SESSION['id_penawar'];
 $sql = "SELECT * FROM penawar WHERE id_penawar = '$id_penawar'";
 $result = mysqli_query($mysqli, $sql);
@@ -51,6 +14,92 @@ while($datapn = mysqli_fetch_array($result))
     $passpn = $datapn['password_penawar'];
     $pppn = $datapn['pp_penawar'];
     $saldopn = $datapn['saldo'];
+}
+if(isset($_POST['update']))
+{
+    $uid_penawar = $_POST['id_penawar'];
+    $unamapn = $_POST['namapn'];
+    $ualamatpn = $_POST['alamatpn'];
+    $unorekpn = $_POST['norekpn'];
+    $unotelppn = $_POST['notelppn'];
+    $uemailpn = $_POST['emailpn'];
+    $upasspn = $_POST['passpn'];
+    $ceknama = mysqli_query($mysqli, "SELECT * FROM penawar WHERE nama_penawar='$unamapn'");
+    $hasilnama = mysqli_fetch_array($ceknama);
+    if ($hasilnama['id_penawar']>0) {
+      if ($hasilnama['nama_penawar']==$namapn) {
+        $cekemail = mysqli_query($mysqli, "SELECT * FROM penawar WHERE email_penawar='$uemailpn'");
+        $hasilemail = mysqli_fetch_array($cekemail);
+        if ($hasilemail['id_penawar']>0) {
+          if ($hasilemail['email_penawar']==$emailpn) {
+            $result = mysqli_query($mysqli, "UPDATE penawar SET nama_penawar='$unamapn',alamat_penawar='$ualamatpn',rek_penawar='$unorekpn',notelp_penawar='$unotelppn',email_penawar='$uemailpn',password_penawar='$upasspn' WHERE id_penawar=$uid_penawar");
+            header("location: profilpn.php");
+          }else {
+            header("location: editprofilpn.php?sudah=email");
+          }
+        }else {
+          $result = mysqli_query($mysqli, "UPDATE penawar SET nama_penawar='$unamapn',alamat_penawar='$ualamatpn',rek_penawar='$unorekpn',notelp_penawar='$unotelppn',email_penawar='$uemailpn',password_penawar='$upasspn' WHERE id_penawar=$uid_penawar");
+          header("location: profilpn.php");
+        }
+      }else {
+        header("location: editprofilpn.php?sudah=nama");
+      }
+    }else {
+      $cekemail = mysqli_query($mysqli, "SELECT * FROM penawar WHERE email_penawar='$uemailpn'");
+      $hasilemail = mysqli_fetch_array($cekemail);
+      if ($hasilemail['id_penawar']>0) {
+        if ($hasilemail['email_penawar']==$emailpn) {
+          $result = mysqli_query($mysqli, "UPDATE penawar SET nama_penawar='$unamapn',alamat_penawar='$ualamatpn',rek_penawar='$unorekpn',notelp_penawar='$unotelppn',email_penawar='$uemailpn',password_penawar='$upasspn' WHERE id_penawar=$uid_penawar");
+          header("location: profilpn.php");
+        }else {
+          header("location: editprofilpn.php?sudah=email");
+        }
+      }else {
+        $result = mysqli_query($mysqli, "UPDATE penawar SET nama_penawar='$unamapn',alamat_penawar='$ualamatpn',rek_penawar='$unorekpn',notelp_penawar='$unotelppn',email_penawar='$uemailpn',password_penawar='$upasspn' WHERE id_penawar=$uid_penawar");
+        header("location: profilpn.php");
+      }
+    }
+  }
+if(isset($_POST['updatepppn'])) {
+    $uid_penawar = $_POST['id_penawar'];
+    $folder = "pppn/";
+    $upload_image = $_FILES['gambarpn']['name'];
+
+    $jenis_gambar = $_FILES['gambarpn']['type'];
+    $ukuran_gambar = $_FILES['gambarpn']['size'];
+    $maks_ukuran = 10000000;
+    if ($jenis_gambar=="image/jpeg" || $jenis_gambar=="image/jpg") {
+      if ($ukuran_gambar <= $maks_ukuran) {
+        $width_size = 480;
+        $height_size = 480;
+        $filesave = $folder . $upload_image;
+        move_uploaded_file($_FILES['gambarpn']['tmp_name'], $filesave);
+        if ($jenis_gambar=="image/jpeg") {
+          $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpeg";
+        }else {
+          $resize_image = $folder . "resize_" . uniqid(rand()) . ".jpg";
+        }
+        list( $width, $height ) = getimagesize($filesave);
+        $w = $width / $width_size;
+        $h = $height / $height_size;
+        $newwidth = $width / $w;
+        $newheight = $height / $h;
+        $thumb = imagecreatetruecolor($newwidth, $newheight);
+        $source = imagecreatefromjpeg($filesave);
+        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        imagejpeg($thumb, $resize_image);
+        imagedestroy($thumb);
+        imagedestroy($source);
+        imagedestroy($filesave);
+        imagedestroy($upload_image);
+        $result = mysqli_query($mysqli, "UPDATE penawar SET pp_penawar='$resize_image' WHERE id_penawar=$uid_penawar");
+        header("location:profilpn.php");
+      }else {
+        header("location:editprofilpn.php?ukuran=lebih");
+      }
+    }else {
+      header("location:editprofilpn.php?tipe=salah");
+    }
 }
 function rupiah($angka){
 	$hasil_rupiah = number_format($angka,0,',','.');
@@ -262,26 +311,43 @@ function rupiah($angka){
 											<h9> Upload Foto Profil</h9><br>
     										<input class="buttonprof" type="file" name="gambarpn"><br><br>
                         <input type="hidden" name="id_penawar" value="<?php echo $id_penawar; ?>">
-                        <input type="submit" name="updatepppn" value="Upload">
+                        <input type="submit" name="updatepppn" value="Upload"><br><br>
+                        <?php
+                        if (isset($_GET['ukuran'])) {
+                          echo "---Ukuran gambar tidak boleh lebih dari 10 MB!!---";
+                        }
+                        if (isset($_GET['tipe'])) {
+                          echo "---Tipe gambar harus jpg & jpeg!!---";
+                        }
+                         ?>
 										</div>
   									</form>
 								</div>
 							</div>
 							<div class="span5">
+                <?php
+                if (isset($_GET['sudah'])) {
+                  if ($_GET['sudah']=="nama") {
+                    echo "Nama Penawar Sudah Ada";
+                  }else {
+                    echo "Email Penawar Sudah Ada";
+                  }
+                }
+                 ?>
                 <form name="update_pn" method="post" action="editprofilpn.php">
 								<address>
 									<h4><strong>Nama Penawar:</strong></h4>
-									<input type="text" class="span5" name="namapn" value="<?php echo $namapn; ?>">
+									<input type="text" class="span5" name="namapn" value="<?php echo $namapn; ?>" required oninvalid="this.setCustomValidity('nama tidak boleh kosong')" oninput="setCustomValidity('')">
 									<h4><strong>Alamat:</strong></h4>
-									<input type="text" class="span8" name="alamatpn" value="<?php echo $alamatpn; ?>">
+									<input type="text" class="span8" name="alamatpn" value="<?php echo $alamatpn; ?>" required oninvalid="this.setCustomValidity('alamat tidak boleh kosong')" oninput="setCustomValidity('')">
 									<h4><strong>Nomor Rekening:</strong></h4>
-									<input type="text" class="span8" name="norekpn" value="<?php echo $norekpn; ?>">
+									<input type="number" class="span8" name="norekpn" value="<?php echo $norekpn; ?>" required oninvalid="this.setCustomValidity('harus diisi dalam bentuk nomor')" oninput="setCustomValidity('')">
                   <h4><strong>Nomor Telepon:</strong></h4>
-									<input type="text" class="span8" name="notelppn" value="<?php echo $notelppn; ?>">
+									<input type="number" class="span8" name="notelppn" value="<?php echo $notelppn; ?>" required oninvalid="this.setCustomValidity('harus diisi dalam bentuk nomor')" oninput="setCustomValidity('')">
                   <h4><strong>Email:</strong></h4>
-									<input type="text" class="span8" name="emailpn" value="<?php echo $emailpn; ?>">
+									<input type="email" class="span8" name="emailpn" value="<?php echo $emailpn; ?>" required oninvalid="this.setCustomValidity('harus diisi dalam bentuk email')" oninput="setCustomValidity('')">
                   <h4><strong>Password:</strong></h4>
-									<input type="text" class="span8" name="passpn" value="<?php echo $passpn; ?>">
+									<input type="text" class="span8" name="passpn" value="<?php echo $passpn; ?>" required oninvalid="this.setCustomValidity('password tidak boleh kosong')" oninput="setCustomValidity('')">
 								</address>
                 <input type="hidden" name="id_penawar" value="<?php echo $id_penawar; ?>">
 								<button class="btn btn-inverse" type="submit" name="update">Simpan</button>

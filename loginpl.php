@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><a href="main.php" class="signup-image-link"><img src="elang.PNG" alt="sing up image"></figure></a>
+                        <figure><a href="index.php" class="signup-image-link"><img src="elang.PNG" alt="sing up image"></figure></a>
                         <a href="regispl.php" class="signup-image-link">Buat akun</a>
                     </div>
                     <div class="signin-form">
@@ -27,15 +27,18 @@
                               echo "Anda gagal logout";
                             }
                         	}
+                          if (isset($_GET['regis'])) {
+                            echo "Registrasi berhasil";
+                          }
                         	?>
                         <form class="register-form" id="login-form"action="prosesloginpl.php" method="post" name="formlogpl">
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="nama_pelelang" placeholder="Nama Pengguna"/>
+                                <input type="text" name="nama_pelelang" placeholder="Nama Pengguna" required oninvalid="this.setCustomValidity('nama tidak boleh kosong')" oninput="setCustomValidity('')"/>
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password_pelelang" placeholder="Password"/>
+                                <input type="password" name="password_pelelang" placeholder="Password" required oninvalid="this.setCustomValidity('password tidak boleh kosong')" oninput="setCustomValidity('')"/>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
@@ -45,6 +48,7 @@
                                 <input type="submit" name="submitlogpl" value="Masuk" id="signin" class="form-submit"/>
                             </div>
                         </form>
+                        <a href="forgot-passwordpl.php">lupa password</a>
                     </div>
                 </div>
             </div>

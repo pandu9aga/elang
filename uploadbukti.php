@@ -244,7 +244,15 @@ function rupiah($angka){
                             <form method="post" enctype="multipart/form-data" action="prosesuploadbukti.php">
       												<input class="btn btn-inverse" type="file" name="gambar">
                               <input type="hidden" name="id_transfer" value="<?php echo $id_transfer; ?>">
-                              <input type="submit" name="upload" class="btn btn-inverse pull-bottom" value="Upload">
+                              <input type="submit" name="upload" class="btn btn-inverse pull-bottom" value="Upload"><br>
+                              <?php
+                              if (isset($_GET['ukuran'])) {
+                                echo "---Ukuran gambar tidak boleh lebih dari 10 MB!!---";
+                              }
+                              if (isset($_GET['tipe'])) {
+                                echo "---Tipe gambar harus jpg & jpeg!!---";
+                              }
+                               ?>
   													</form>
                             <h5> Bukti Transfer	:</h5>Segera lakukan pembayaran dan upload bukti transfer <br><br>
                             <a href="bataltopup.php?id_transfer=<?php echo $id_transfer;?>"><button class="btn btn-inverse"name="delete">Batalkan Topup</button></a>

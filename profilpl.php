@@ -79,7 +79,7 @@ while($datapl = mysqli_fetch_array($result))
 									<h4><strong>Nomor Rekening:</strong></h4> <span><?php echo $norekpl; ?></span><br>
                   <h4><strong>Nomor Telepon:</strong></h4> <span><?php echo $notelppl; ?></span><br>
                   <h4><strong>Email:</strong></h4> <span><?php echo $emailpl; ?></span><br>
-                  <h4><strong>Password:</h4> <span><input type="text" readonly placeholder="<?php echo $passpl; ?>"></span><br>
+                  <h4><strong>Password:</h4> <span><input type="password" readonly placeholder="<?php echo $passpl; ?>"></span><br>
 								</address>
 								<h4><strong>catatan: </strong></h4><span><?php echo $cttpl; ?></span><br>
                 <a href="editprofilpl.php"><button class="btn btn-inverse">Edit Profil</button></a>
